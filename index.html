@@ -61,7 +61,7 @@
       .nav-menu {
         display: flex;
         list-style: none;
-        gap: 2rem;
+        gap: 1.5rem;
       }
 
       .nav-link {
@@ -70,6 +70,7 @@
         font-weight: 500;
         transition: all 0.3s ease;
         position: relative;
+        font-size: 0.9rem;
       }
 
       .nav-link:hover {
@@ -296,6 +297,75 @@
         min-width: 100px;
       }
 
+      /* Education Section */
+      .education-grid, .experience-grid {
+        display: grid;
+        gap: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .education-item, .experience-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+      }
+
+      .education-item:hover, .experience-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+      }
+
+      .education-header, .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .education-title, .experience-title {
+        flex: 1;
+      }
+
+      .education-title h3, .experience-title h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+      }
+
+      .education-school, .experience-company {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.3rem;
+      }
+
+      .education-location, .experience-location {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .education-year, .experience-year {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+
+      .education-description, .experience-description {
+        color: #666;
+        line-height: 1.6;
+        margin-top: 1rem;
+      }
+
       /* Skills Section */
       .skills-grid {
         display: grid;
@@ -355,6 +425,185 @@
         width: 0;
         transition: width 1.5s ease;
         border-radius: 10px;
+      }
+
+      /* Awards Section */
+      .awards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .award-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .award-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+      }
+
+      .award-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .award-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+      }
+
+      .award-item h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .award-issuer {
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .award-year {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .award-description {
+        color: #666;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+      }
+
+      .project-image {
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .project-content {
+        padding: 2rem;
+      }
+
+      .project-content h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-type {
+        color: #667eea;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .project-description {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tech-tag {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #667eea;
+        color: white;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .project-link:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
       }
 
       /* Contact Section */
@@ -579,6 +828,19 @@
           padding: 0.8rem 1.5rem;
           font-size: 0.9rem;
         }
+
+        .education-header, .experience-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .awards-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 480px) {
@@ -618,7 +880,11 @@
         <ul class="nav-menu">
           <li><a href="#home" class="nav-link">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#awards" class="nav-link">Awards</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <div class="hamburger">
@@ -719,6 +985,91 @@
       </div>
     </section>
 
+    <!-- Education Section -->
+    <section id="education" class="section" style="background: #f8f9fa">
+      <div class="container">
+        <div class="section-title">
+          <h2>Educational Background</h2>
+          <p>My academic journey and qualifications</p>
+        </div>
+        <div class="education-grid">
+          <div class="education-item">
+            <div class="education-header">
+              <div class="education-title">
+                <h3>Bachelor of Science in Information Technology</h3>
+                <div class="education-school">University of the Philippines</div>
+                <div class="education-location">Quezon City, Philippines</div>
+              </div>
+              <div class="education-year">2013 - 2017</div>
+            </div>
+            <div class="education-description">
+              Completed junior high school with honors. Developed early interest in computer science and mathematics. 
+              Participated in various science competitions and technology-related extracurricular activities.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Work Experience</h2>
+          <p>Professional journey and career highlights</p>
+        </div>
+        <div class="experience-grid">
+          <div class="experience-item">
+            <div class="experience-header">
+              <div class="experience-title">
+                <h3>Full Stack Web Developer</h3>
+                <div class="experience-company">TechSolutions Inc.</div>
+                <div class="experience-location">Makati City, Philippines</div>
+              </div>
+              <div class="experience-year">2023 - Present</div>
+            </div>
+            <div class="experience-description">
+              Lead developer for multiple web applications using PHP, MySQL, JavaScript, and modern frameworks. 
+              Collaborated with cross-functional teams to deliver high-quality software solutions. 
+              Responsible for database design, API development, and user interface implementation.
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="experience-header">
+              <div class="experience-title">
+                <h3>Junior Web Developer</h3>
+                <div class="experience-company">Digital Creatives Studio</div>
+                <div class="experience-location">Quezon City, Philippines</div>
+              </div>
+              <div class="experience-year">2022 - 2023</div>
+            </div>
+            <div class="experience-description">
+              Developed responsive websites and web applications for various clients. 
+              Gained experience in HTML, CSS, JavaScript, and PHP. Worked closely with senior developers 
+              to implement best practices and coding standards.
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="experience-header">
+              <div class="experience-title">
+                <h3>Web Development Intern</h3>
+                <div class="experience-company">StartUp Hub Philippines</div>
+                <div class="experience-location">Taguig City, Philippines</div>
+              </div>
+              <div class="experience-year">2021 - 2022</div>
+            </div>
+            <div class="experience-description">
+              Assisted in the development of company website and internal tools. 
+              Learned modern web development practices, version control with Git, 
+              and agile development methodologies. Contributed to front-end improvements and bug fixes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills" class="section" style="background: #f8f9fa">
       <div class="container">
@@ -789,6 +1140,293 @@
             </div>
             <div class="progress-bar">
               <div class="progress-fill" data-width="78"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates & Awards Section -->
+    <section id="awards" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Certificates & Awards</h2>
+          <p>Recognition and certifications that showcase my expertise</p>
+        </div>
+        <div class="awards-grid">
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h3>Best Capstone Project</h3>
+            <div class="award-issuer">University of the Philippines</div>
+            <div class="award-year">2023</div>
+            <div class="award-description">
+              Awarded for developing an innovative Student Management System 
+              with advanced features and exceptional user experience design.
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <h3>PHP Professional Certification</h3>
+            <div class="award-issuer">Zend Technologies</div>
+            <div class="award-year">2023</div>
+            <div class="award-description">
+              Certified PHP developer with proven expertise in modern PHP frameworks, 
+              object-oriented programming, and database integration.
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fas fa-medal"></i>
+            </div>
+            <h3>Web Development Bootcamp</h3>
+            <div class="award-issuer">Coursera - Meta</div>
+            <div class="award-year">2022</div>
+            <div class="award-description">
+              Completed comprehensive full-stack web development course covering 
+              HTML, CSS, JavaScript, React, and database management.
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Programming Competition Winner</h3>
+            <div class="award-issuer">National IT Olympics</div>
+            <div class="award-year">2022</div>
+            <div class="award-description">
+              First place winner in the university-level programming competition, 
+              demonstrating exceptional problem-solving and coding skills.
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fab fa-js-square"></i>
+            </div>
+            <h3>JavaScript Algorithms Certificate</h3>
+            <div class="award-issuer">freeCodeCamp</div>
+            <div class="award-year">2021</div>
+            <div class="award-description">
+              Completed 300+ hours of JavaScript algorithms and data structures 
+              challenges, building solid foundation in programming logic.
+            </div>
+          </div>
+
+          <div class="award-item">
+            <div class="award-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Dean's List</h3>
+            <div class="award-issuer">University of the Philippines</div>
+            <div class="award-year">2019-2023</div>
+            <div class="award-description">
+              Consistently maintained high academic performance throughout 
+              college years, earning Dean's List recognition for 6 semesters.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section" style="background: #f8f9fa">
+      <div class="container">
+        <div class="section-title">
+          <h2>My Projects & Systems</h2>
+          <p>Showcase of applications and systems I've developed</p>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="project-content">
+              <h3>Student Management System</h3>
+              <div class="project-type">Web Application</div>
+              <div class="project-description">
+                Comprehensive student information management system with features for enrollment, 
+                grade management, attendance tracking, and report generation. Includes admin panel 
+                and student portal with real-time notifications.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Bootstrap</span>
+                <span class="tech-tag">AJAX</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="project-content">
+              <h3>E-Commerce Platform</h3>
+              <div class="project-type">Full Stack Application</div>
+              <div class="project-description">
+                Modern e-commerce platform with product catalog, shopping cart, payment integration, 
+                order management, and admin dashboard. Features responsive design and secure payment processing.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">jQuery</span>
+                <span class="tech-tag">PayPal API</span>
+                <span class="tech-tag">CSS3</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-hospital"></i>
+            </div>
+            <div class="project-content">
+              <h3>Hospital Management System</h3>
+              <div class="project-type">Healthcare Application</div>
+              <div class="project-description">
+                Complete hospital management solution with patient registration, appointment scheduling, 
+                medical records, billing system, and staff management. Built with security and HIPAA compliance in mind.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Chart.js</span>
+                <span class="tech-tag">PDF Generation</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="project-content">
+              <h3>Library Management System</h3>
+              <div class="project-type">Desktop Application</div>
+              <div class="project-description">
+                Digital library system for book catalog management, member registration, borrowing/returning 
+                system, fine calculation, and inventory tracking. Features advanced search and reporting capabilities.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="project-content">
+              <h3>Sales Analytics Dashboard</h3>
+              <div class="project-type">Business Intelligence</div>
+              <div class="project-description">
+                Interactive dashboard for sales performance tracking with real-time charts, KPI monitoring, 
+                data visualization, and automated report generation. Helps businesses make data-driven decisions.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">Chart.js</span>
+                <span class="tech-tag">AJAX</span>
+                <span class="tech-tag">JSON</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="project-content">
+              <h3>Social Media Platform</h3>
+              <div class="project-type">Social Network</div>
+              <div class="project-description">
+                Mini social media platform with user profiles, post sharing, real-time messaging, 
+                friend connections, and news feed. Features modern UI/UX design and responsive layout.
+              </div>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">WebSocket</span>
+                <span class="tech-tag">CSS3</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link">
+                  <i class="fas fa-external-link-alt"></i>
+                  Live Demo
+                </a>
+                <a href="#" class="project-link">
+                  <i class="fab fa-github"></i>
+                  Source Code
+                </a>
+              </div>
             </div>
           </div>
         </div>
