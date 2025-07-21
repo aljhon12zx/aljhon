@@ -1966,6 +1966,62 @@
         // Start the typing animation
         typeWriter();
       });
+
+      // Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the hamburger menu and nav menu elements
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    // Add click event listener to hamburger menu
+    hamburger.addEventListener('click', function() {
+        // Toggle active class on nav menu
+        navMenu.classList.toggle('active');
+        
+        // Optional: Add rotation animation to hamburger icon
+        hamburger.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on nav links (for better UX)
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+    });
+    
+    // Close menu when clicking outside of nav (optional)
+    document.addEventListener('click', function(e) {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+    });
+});
+
+// Optional: Smooth scrolling for anchor links
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.nav-link[href^="#"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar height
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
     </script>
   </body>
 </html>
