@@ -635,7 +635,12 @@
           <p class="subtitle">Passionate about creating digital solutions</p>
           <div class="typed-text" id="typed-text">PROGRAMMER</div>
           <div class="hero-buttons">
-            <a href="#" class="btn btn-primary" id="downloadBtn">
+            <a
+              href="pdf/My_Resume.pdf"
+              class="btn btn-primary"
+              id="downloadBtn"
+              download="Aljhon_Resume.pdf"
+            >
               <i class="fas fa-download"></i>
               Download Resume
             </a>
@@ -1208,6 +1213,63 @@ Nationality: Filipino
       // Add smooth page loading
       window.addEventListener("load", function () {
         document.body.classList.add("loaded");
+      });
+
+      // Typing Animation
+      document.addEventListener("DOMContentLoaded", function () {
+        const typedTextElement = document.getElementById("typed-text");
+
+        // Array of words to cycle through
+        const words = [
+          "PROGRAMMER",
+          "WEB DEVELOPER",
+          "FULL STACK DEVELOPER",
+          "SOFTWARE ENGINEER",
+        ];
+
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 150;
+
+        function typeWriter() {
+          const currentWord = words[wordIndex];
+
+          if (isDeleting) {
+            // Remove characters
+            typedTextElement.textContent = currentWord.substring(
+              0,
+              charIndex - 1
+            );
+            charIndex--;
+            typeSpeed = 50; // Faster when deleting
+          } else {
+            // Add characters
+            typedTextElement.textContent = currentWord.substring(
+              0,
+              charIndex + 1
+            );
+            charIndex++;
+            typeSpeed = 150; // Normal typing speed
+          }
+
+          // If word is complete
+          if (!isDeleting && charIndex === currentWord.length) {
+            // Pause at end of word
+            typeSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            // Move to next word
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typeSpeed = 500; // Pause before starting new word
+          }
+
+          setTimeout(typeWriter, typeSpeed);
+        }
+
+        // Start the typing animation
+        typeWriter();
       });
     </script>
   </body>
