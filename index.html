@@ -852,7 +852,7 @@
 
     <script>
         // Initialize EmailJS with your public key - REPLACE WITH YOUR ACTUAL KEY
-        // emailjs.init("YOUR_ACTUAL_PUBLIC_KEY_HERE");
+         emailjs.init("zzW2oUFbpP-JqoeS_");
 
         // Typing animation
         const typedTextElement = document.getElementById('typed-text');
@@ -990,7 +990,7 @@
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
             }, 2000);
 
-            /* UNCOMMENT AND CONFIGURE THIS SECTION FOR ACTUAL EMAIL SENDING:
+             //UNCOMMENT AND CONFIGURE THIS SECTION FOR ACTUAL EMAIL SENDING:
             
             // EmailJS template parameters
             const templateParams = {
@@ -1002,7 +1002,7 @@
             };
             
             // Send email using EmailJS - REPLACE WITH YOUR ACTUAL SERVICE AND TEMPLATE IDs
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
                 .then(function(response) {
                     console.log('Email sent successfully:', response);
                     showSuccess();
@@ -1017,7 +1017,7 @@
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
                 });
-            */
+            
         });
 
         // Download resume functionality
