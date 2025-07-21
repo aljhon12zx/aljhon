@@ -614,7 +614,7 @@
     <!-- Navigation -->
     <nav class="navbar">
       <div class="nav-container">
-        <div class="logo">Aljhon Caangay Portfolio</div>
+       <div class="logo">Aljhon Caangay <span style="color: black;">Portfolio</span></div>
         <ul class="nav-menu">
           <li><a href="#home" class="nav-link">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
@@ -636,10 +636,15 @@
           <div class="typed-text" id="typed-text">PROGRAMMER</div>
           <div class="hero-buttons">
             <!-- Updated Download Button HTML -->
-<a href="pdf/My_Resume.pdf" class="btn btn-primary" id="downloadBtn" download="Aljhon_Resume.pdf">
-  <i class="fas fa-download"></i>
-  Download Resume
-</a>
+            <a
+              href="pdf/My_Resume.pdf"
+              class="btn btn-primary"
+              id="downloadBtn"
+              download="Aljhon_Resume.pdf"
+            >
+              <i class="fas fa-download"></i>
+              Download Resume
+            </a>
             <a href="#contact" class="btn btn-outline">
               <i class="fas fa-envelope"></i>
               Get In Touch
@@ -1040,23 +1045,23 @@
         }
       });
 
-     document.addEventListener('DOMContentLoaded', function() {
-    const downloadBtn = document.getElementById('downloadBtn');
-    
-    downloadBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Create a temporary link element
-        const link = document.createElement('a');
-        link.href = 'pdf/My_Resume.pdf';
-        link.download = 'Aljhon_Resume.pdf'; // This will be the downloaded filename
-        
-        // Trigger download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
-});
+      document.addEventListener("DOMContentLoaded", function () {
+        const downloadBtn = document.getElementById("downloadBtn");
+
+        downloadBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Create a temporary link element
+          const link = document.createElement("a");
+          link.href = "pdf/My_Resume.pdf";
+          link.download = "Aljhon_Resume.pdf"; // This will be the downloaded filename
+
+          // Trigger download
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      });
 
       // Navbar scroll effect
       window.addEventListener("scroll", function () {
@@ -1181,12 +1186,7 @@
         const typedTextElement = document.getElementById("typed-text");
 
         // Array of words to cycle through
-        const words = [
-          "PROGRAMMER",
-          "WEB DEVELOPER",
-          "FULL STACK DEVELOPER",
-          "SOFTWARE ENGINEER",
-        ];
+        const words = ["PROGRAMMER", "WEB DEVELOPER", "FULL STACK DEVELOPER"];
 
         let wordIndex = 0;
         let charIndex = 0;
