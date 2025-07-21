@@ -866,6 +866,58 @@ window.addEventListener('resize', handleResize);
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
 });
+// Typing Animation
+      document.addEventListener("DOMContentLoaded", function () {
+        const typedTextElement = document.getElementById("typed-text");
+
+        // Array of words to cycle through
+        const words = ["PROGRAMMER", "WEB DEVELOPER", "FULL STACK DEVELOPER"];
+
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 150;
+
+        function typeWriter() {
+          const currentWord = words[wordIndex];
+
+          if (isDeleting) {
+            // Remove characters
+            typedTextElement.textContent = currentWord.substring(
+              0,
+              charIndex - 1
+            );
+            charIndex--;
+            typeSpeed = 50; // Faster when deleting
+          } else {
+            // Add characters
+            typedTextElement.textContent = currentWord.substring(
+              0,
+              charIndex + 1
+            );
+            charIndex++;
+            typeSpeed = 150; // Normal typing speed
+          }
+
+          // If word is complete
+          if (!isDeleting && charIndex === currentWord.length) {
+            // Pause at end of word
+            typeSpeed = 2000;
+            isDeleting = true;
+          } else if (isDeleting && charIndex === 0) {
+            // Move to next word
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typeSpeed = 500; // Pause before starting new word
+          }
+
+          setTimeout(typeWriter, typeSpeed);
+        }
+
+        // Start the typing animation
+        typeWriter();
+      });
+
     </script>
 </body>
 </html>
