@@ -6,6 +6,8 @@
     <title>ALJHON CAANGAY | Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- EmailJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -430,6 +432,13 @@
             border: 1px solid #f5c6cb;
         }
 
+        /* Button disabled state */
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-menu {
@@ -669,10 +678,10 @@
             <div class="contact-content">
                 <div class="contact-form">
                     <div class="success-message" id="successMessage">
-                        Thank you! Your message has been sent successfully.
+                        🎉 Thank you! Your message has been sent successfully. I'll get back to you soon!
                     </div>
                     <div class="error-message" id="errorMessage">
-                        Please fill in all required fields.
+                        ❌ Please fill in all required fields.
                     </div>
                     
                     <form id="contactForm">
@@ -692,7 +701,7 @@
                             <label for="message">Message *</label>
                             <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitBtn">
                             <i class="fas fa-paper-plane"></i>
                             Send Message
                         </button>
@@ -745,177 +754,345 @@
     </section>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+      // Initialize EmailJS with your public key
+emailjs.init("zzW2oUFbpP-JqoeS_");
 
-        // Skills animation
-        function animateSkills() {
-            const skillBars = document.querySelectorAll('.progress-fill');
-            skillBars.forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                setTimeout(() => {
-                    bar.style.width = width + '%';
-                }, 500);
+// Typing animation
+const typedTextElement = document.getElementById('typed-text');
+const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeText() {
+    const currentText = textArray[textIndex];
+    
+    if (isDeleting) {
+        typedTextElement.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typedTextElement.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let typeSpeed = isDeleting ? 100 : 150;
+
+    if (!isDeleting && charIndex === currentText.length) {
+        typeSpeed = 2000;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % textArray.length;
+        typeSpeed = 500;
+    }
+
+    setTimeout(typeText, typeSpeed);
+}
+
+// Start typing animation
+typeText();
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
         }
+    });
+});
 
-        // Intersection Observer for skills animation
-        const skillsSection = document.querySelector('#skills');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkills();
-                    observer.unobserve(skillsSection);
-                }
-            });
+// Skills animation
+function animateSkills() {
+    const skillBars = document.querySelectorAll('.progress-fill');
+    skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => {
+            bar.style.width = width + '%';
+        }, 500);
+    });
+}
+
+// Intersection Observer for skills animation
+const skillsSection = document.querySelector('#skills');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateSkills();
+            observer.unobserve(skillsSection);
+        }
+    });
+}, { threshold: 0.3 });
+
+if (skillsSection) {
+    observer.observe(skillsSection);
+}
+
+// Email validation function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Show success message
+function showSuccess() {
+    document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'none';
+    }, 5000);
+}
+
+// Show error message
+function showError(message = 'Please fill in all required fields.') {
+    document.getElementById('successMessage').style.display = 'none';
+    const errorElement = document.getElementById('errorMessage');
+    errorElement.textContent = `❌ ${message}`;
+    errorElement.style.display = 'block';
+    setTimeout(() => {
+        errorElement.style.display = 'none';
+    }, 5000);
+}
+
+// Contact form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    // Validation
+    if (!name || !email || !subject || !message) {
+        showError('Please fill in all required fields.');
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        showError('Please enter a valid email address.');
+        return;
+    }
+    
+    // Disable submit button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    
+    // EmailJS template parameters
+    const templateParams = {
+        from_name: name,
+        from_email: email,
+        subject: subject,
+        message: message,
+        to_email: 'aljhoncaangay@gmail.com'
+    };
+    
+    // Send email using EmailJS
+    emailjs.send('service_your_service_id', 'template_your_template_id', templateParams)
+        .then(function(response) {
+            console.log('Email sent successfully:', response);
+            showSuccess();
+            document.getElementById('contactForm').reset();
+        })
+        .catch(function(error) {
+            console.error('Email sending failed:', error);
+            showError('Failed to send message. Please try again or contact me directly.');
+        })
+        .finally(function() {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
         });
-        observer.observe(skillsSection);
+});
 
-        // Contact form handling
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            if (!name || !email || !subject || !message) {
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('successMessage').style.display = 'none';
-                return;
-            }
-            
-            // Simulate form submission
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-            
-            // Reset form
-            this.reset();
-            
-            // In a real application, you would send this data to your server
-            console.log('Form submitted:', { name, email, subject, message });
-        });
-
-        // Resume download
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Create a sample resume content
-            const resumeContent = `
+// Download resume functionality
+document.getElementById('downloadBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Create a sample resume data (you can replace this with actual resume content)
+    const resumeContent = `
 ALJHON CAANGAY
-Email: aljhoncaangay@gmail.com
+Full Stack Developer
+
+Contact Information:
 Phone: +63 905 7466 197
+Email: aljhoncaangay@gmail.com
 Location: Philippines
+Facebook: Aljhon Caangay
 
-SUMMARY
-Dedicated Full Stack Developer with experience in web development and customer service. 
-Passionate about creating innovative digital solutions and delivering exceptional results.
+About:
+I am a dedicated and results-driven developer with a proven track record of creating 
+innovative web solutions. With a keen understanding of both frontend and backend 
+technologies, I excel in building scalable applications and delivering value-driven 
+solutions that meet both client and business objectives.
 
-TECHNICAL SKILLS
-- HTML/CSS: 80-85%
-- JavaScript: 75%
-- PHP: 70%
-- MySQL: 78%
+Skills:
+- HTML (85%)
+- CSS (80%)
+- JavaScript (75%)
+- PHP (70%)
+- MySQL (78%)
 
-EXPERIENCE
-Sales Agent - PowerLinx Agency (2019-2020)
-Sales Agent - Tres Alas Corp. (2020-2021)
-Ticket Agent - Rose Travel And Tours (2022-2023)
+Languages:
+- Tagalog
+- English
+- Cebuano
 
-EDUCATION
-Senior High School - West Prime Horizon Institute Inc. (2019-Present)
-High School - Norberta Guillar Memorial National High School (2013-2017)
-Elementary - Nazareth Elementary School (2007-2012)
+Personal Information:
+Age: 23 years old
+Nationality: Filipino
+    `;
+    
+    // Create and download the resume file
+    const blob = new Blob([resumeContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Aljhon_Caangay_Resume.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+});
 
-LANGUAGES
-Tagalog, English, Cebuano
-            `;
-            
-            // Create and download the resume file
-            const blob = new Blob([resumeContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Aljhon_Caangay_Resume.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        });
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
+    }
+});
 
-        // Typing animation
-        const texts = ['PROGRAMMER', 'WEB DEVELOPER', 'FULL STACK DEVELOPER'];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typedElement = document.getElementById('typed-text');
-
-        function typeAnimation() {
-            const currentText = texts[textIndex];
-            
-            if (!isDeleting) {
-                typedElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                
-                if (charIndex === currentText.length) {
-                    isDeleting = true;
-                    setTimeout(typeAnimation, 1500);
-                    return;
-                }
-            } else {
-                typedElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    textIndex = (textIndex + 1) % texts.length;
-                }
+// Add scroll animation to elements
+function addScrollAnimation() {
+    const elements = document.querySelectorAll('.section');
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
             }
-            
-            setTimeout(typeAnimation, isDeleting ? 100 : 150);
+        });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        scrollObserver.observe(element);
+    });
+}
+
+// Initialize scroll animations when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    addScrollAnimation();
+});
+
+// Mobile menu toggle (if you want to add mobile menu functionality)
+function toggleMobileMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    const navbar = document.querySelector('.navbar');
+    
+    // Create hamburger button if it doesn't exist
+    let hamburger = document.querySelector('.hamburger');
+    if (!hamburger) {
+        hamburger = document.createElement('div');
+        hamburger.className = 'hamburger';
+        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+        hamburger.style.display = 'none';
+        hamburger.style.fontSize = '1.5rem';
+        hamburger.style.cursor = 'pointer';
+        hamburger.style.color = '#667eea';
+        
+        document.querySelector('.nav-container').appendChild(hamburger);
+        
+        // Show hamburger on mobile
+        if (window.innerWidth <= 768) {
+            hamburger.style.display = 'block';
+            navMenu.style.display = 'none';
         }
-
-        // Start typing animation
-        typeAnimation();
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        
+        hamburger.addEventListener('click', function() {
+            if (navMenu.style.display === 'none' || navMenu.style.display === '') {
+                navMenu.style.display = 'flex';
+                navMenu.style.position = 'absolute';
+                navMenu.style.top = '100%';
+                navMenu.style.left = '0';
+                navMenu.style.right = '0';
+                navMenu.style.background = 'white';
+                navMenu.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                navMenu.style.flexDirection = 'column';
+                navMenu.style.padding = '1rem';
+                hamburger.innerHTML = '<i class="fas fa-times"></i>';
             } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = 'none';
+                navMenu.style.display = 'none';
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
+    }
+}
 
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+// Handle responsive behavior
+window.addEventListener('resize', function() {
+    const navMenu = document.querySelector('.nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+    
+    if (window.innerWidth > 768) {
+        navMenu.style.display = 'flex';
+        navMenu.style.position = 'static';
+        navMenu.style.flexDirection = 'row';
+        navMenu.style.background = 'none';
+        navMenu.style.boxShadow = 'none';
+        navMenu.style.padding = '0';
+        if (hamburger) hamburger.style.display = 'none';
+    } else {
+        navMenu.style.display = 'none';
+        if (hamburger) hamburger.style.display = 'block';
+        toggleMobileMenu();
+    }
+});
 
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-on-scroll');
-                }
-            });
-        }, observerOptions);
+// Initialize mobile menu on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 768) {
+        toggleMobileMenu();
+    }
+});
 
-        // Observe elements for animation
-        document.querySelectorAll('.skill-item, .contact-item, .about-text').forEach(el => {
-            scrollObserver.observe(el);
-        });
+// Add loading animation
+window.addEventListener('load', function() {
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+// Preload images for better performance
+function preloadImages() {
+    const imageUrls = [
+        // Add any image URLs you want to preload here
+    ];
+    
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+    });
+}
+
+// Initialize preloading
+preloadImages();
+
     </script>
 </body>
 </html>
