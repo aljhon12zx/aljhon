@@ -8,762 +8,492 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- EmailJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: #667eea;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: slideInLeft 1s ease 0.2s forwards;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            opacity: 0;
-            animation: slideInLeft 1s ease 0.4s forwards;
-        }
-
-        .typed-text {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            min-height: 2.5rem;
-            color: #ffd700;
-            opacity: 0;
-            animation: slideInLeft 1s ease 0.6s forwards;
-        }
-
-        .typed-text::after {
-            content: '|';
-            animation: blink 1s infinite;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            opacity: 0;
-            animation: slideInLeft 1s ease 0.8s forwards;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #667eea;
-            border-color: white;
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: white;
-            border-color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border-color: white;
-        }
-
-        .btn-outline:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            animation: slideInRight 1s ease 0.4s forwards;
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .profile-img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 5rem 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .about-text h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.5rem;
-        }
-
-        .info-item strong {
-            color: #667eea;
-            min-width: 100px;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .skill-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .skill-name {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .skill-icon {
-            font-size: 1.5rem;
-            color: #667eea;
-        }
-
-        .skill-percentage {
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            width: 0;
-            transition: width 1.5s ease;
-            border-radius: 10px;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .success-message, .error-message {
-            display: none;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .contact-item h4 {
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .contact-item p {
-            color: #666;
-            margin: 0;
-        }
-
-        /* Animations */
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Mobile Responsiveness */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #667eea;
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .typed-text {
-                font-size: 1.5rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: row;
-                justify-content: center;
-            }
-
-            .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .nav-container {
-                padding: 1rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation -->
+     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">Aljhon Caangay</div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
+      <div class="nav-container">
+       <div class="logo">Aljhon Caangay <span style="color: black;">Portfolio</span></div>
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#awards" class="nav-link">Awards</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Hi, I'm Aljhon</h1>
-                <p class="subtitle">Passionate about creating digital solutions</p>
-                <div class="typed-text" id="typed-text">PROGRAMMER</div>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary" id="downloadBtn">
-                        <i class="fas fa-download"></i>
-                        Download Resume
-                    </a>
-                    <a href="#contact" class="btn btn-outline">
-                        <i class="fas fa-envelope"></i>
-                        Get In Touch
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="floating">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='150' cy='150' r='140' fill='url(%23grad1)' opacity='0.1'/%3E%3Ccircle cx='150' cy='150' r='100' fill='url(%23grad1)' opacity='0.3'/%3E%3Ccircle cx='150' cy='150' r='60' fill='url(%23grad1)'/%3E%3Ctext x='150' y='160' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3EAC%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-img">
-                </div>
-            </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Hi, I'm Aljhon</h1>
+          <p class="subtitle">Passionate about creating digital solutions</p>
+          <div class="typed-text" id="typed-text">PROGRAMMER</div>
+          <div class="hero-buttons">
+            <!-- Updated Download Button HTML -->
+            <a
+              href="pdf/My_Resume.pdf"
+              class="btn btn-primary"
+              id="downloadBtn"
+              download="Aljhon_Resume.pdf"
+            >
+              <i class="fas fa-download"></i>
+              Download Resume
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <i class="fas fa-envelope"></i>
+              Get In Touch
+            </a>
+          </div>
         </div>
+        <div class="hero-image">
+          <div class="floating">
+            <img src="img/aljhon2.jpg" alt="Profile" class="profile-img" />
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Me</h2>
+          <p>Learn more about my background, experience, and what drives me</p>
+        </div>
+        <div class="about-content">
+          <div>
+            <img src="img/aljhon2.jpg" alt="About Me" class="about-img" />
+          </div>
+          <div class="about-text">
+            <h3>Full Stack Developer</h3>
+            <p>
+              I am a dedicated and results-driven developer with a proven track
+              record of creating innovative web solutions. With a keen
+              understanding of both frontend and backend technologies, I excel
+              in building scalable applications and delivering value-driven
+              solutions that meet both client and business objectives.
+            </p>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <strong>Name:</strong>
+                <span>Aljhon Caangay</span>
+              </div>
+              <div class="info-item">
+                <strong>Age:</strong>
+                <span>24 years old</span>
+              </div>
+              <div class="info-item">
+                <strong>Address:</strong>
+                <span>Philippines</span>
+              </div>
+              <div class="info-item">
+                <strong>Nationality:</strong>
+                <span>Filipino</span>
+              </div>
+              <div class="info-item">
+                <strong>Phone:</strong>
+                <span>+63 905 7466 197</span>
+              </div>
+              <div class="info-item">
+                <strong>Email:</strong>
+                <span>aljhoncaangay@gmail.com</span>
+              </div>
+              <div class="info-item">
+                <strong>Facebook:</strong>
+                <span>Aljhon Caangay</span>
+              </div>
+              <div class="info-item">
+                <strong>Languages:</strong>
+                <span>Tagalog, English, Cebuano</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+<section id="education" class="section" style="background: #f8f9fa">
+  <div class="container">
+    <div class="section-title">
+      <h2>Educational Background</h2>
+      <p>My academic journey and qualifications</p>
+    </div>
+    <div class="education-grid">
+      <div class="education-item">
+        <div class="education-header">
+          <div class="education-title">
+            <h3>Bachelor's Degree</h3>
+            <div class="education-school">Zamboanga Del Sur Provincial Government College</div>
+            <div class="education-location">Zamboanga del Sur, Philippines</div>
+          </div>
+          <div class="education-year">2021 - 2025</div>
+        </div>
+        <div class="education-description">
+          Currently pursuing bachelor's degree with focus on developing comprehensive knowledge and skills. 
+          Actively engaged in academic activities and maintaining strong academic performance throughout the program.
+        </div>
+      </div>
+
+      <div class="education-item">
+        <div class="education-header">
+          <div class="education-title">
+            <h3>Senior High School Diploma</h3>
+            <div class="education-school">Westprime Horizon Institute INC.</div>
+            <div class="education-location">Philippines</div>
+          </div>
+          <div class="education-year">2017 - 2019</div>
+        </div>
+        <div class="education-description">
+          Completed senior high school education with strong academic foundation. 
+          Developed critical thinking skills and prepared for higher education through comprehensive curriculum.
+        </div>
+      </div>
+
+      <div class="education-item">
+        <div class="education-header">
+          <div class="education-title">
+            <h3>High School Diploma</h3>
+            <div class="education-school">Norberta Guillar Memorial National High School</div>
+            <div class="education-location">Philippines</div>
+          </div>
+          <div class="education-year">2012 - 2016</div>
+        </div>
+        <div class="education-description">
+          Successfully completed secondary education with good academic standing. 
+          Participated in various school activities and developed foundational knowledge across multiple subjects.
+        </div>
+      </div>
+
+      <div class="education-item">
+        <div class="education-header">
+          <div class="education-title">
+            <h3>Elementary Education</h3>
+            <div class="education-school">Nazareth Elementary School</div>
+            <div class="education-location">Philippines</div>
+          </div>
+          <div class="education-year">2005 - 2011</div>
+        </div>
+        <div class="education-description">
+          Completed primary education with strong fundamentals in core subjects. 
+          Developed early learning skills and enthusiasm for academic achievement.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+   <!-- Work Experience Section -->
+<section id="experience" class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Work Experience</h2>
+      <p>Professional journey and career highlights</p>
+    </div>
+    <div class="experience-grid">
+      <div class="experience-item">
+        <div class="experience-header">
+          <div class="experience-title">
+            <h3>Liaison Officer</h3>
+            <div class="experience-company">Rose Travel and Tours</div>
+            <div class="experience-location">Philippines</div>
+          </div>
+          <div class="experience-year">2023 - 2024</div>
+        </div>
+        <div class="experience-description">
+          Served as primary liaison between the company and various stakeholders including clients, government agencies, and partner organizations. 
+          Managed administrative processes, coordinated travel arrangements, and ensured smooth communication channels. 
+          Handled documentation, permit processing, and maintained strong professional relationships with key contacts.
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <div class="experience-title">
+            <h3>Sales Agent</h3>
+            <div class="experience-company">Clique Marketing Services (Globe BBSP)</div>
+            <div class="experience-location">Philippines</div>
+          </div>
+          <div class="experience-year">2020 - 2022</div>
+        </div>
+        <div class="experience-description">
+          Responsible for promoting and selling Globe telecommunications products and services. 
+          Achieved sales targets through effective customer engagement and product knowledge. 
+          Provided excellent customer service, handled inquiries, and maintained client relationships. 
+          Developed strong communication and negotiation skills while working in a fast-paced sales environment.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section" style="background: #f8f9fa">
+      <div class="container">
+        <div class="section-title">
+          <h2>My Skills</h2>
+          <p>Technologies and tools I work with to bring ideas to life</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-name">
+                <i class="fab fa-html5 skill-icon"></i>
+                HTML
+              </div>
+              <div class="skill-percentage">85%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="85"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-name">
+                <i class="fab fa-css3-alt skill-icon"></i>
+                CSS
+              </div>
+              <div class="skill-percentage">80%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="80"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-name">
+                <i class="fab fa-js-square skill-icon"></i>
+                JavaScript
+              </div>
+              <div class="skill-percentage">75%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="75"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-name">
+                <i class="fab fa-php skill-icon"></i>
+                PHP
+              </div>
+              <div class="skill-percentage">70%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="70"></div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-name">
+                <i class="fas fa-database skill-icon"></i>
+                MySQL
+              </div>
+              <div class="skill-percentage">78%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="78"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   <!-- Certificates & Awards Section -->
+    <section id="awards" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>About Me</h2>
-                <p>Learn more about my background, experience, and what drives me</p>
+                <h2>Certificates & Awards</h2>
+                <p>Recognition and certifications that showcase my expertise</p>
             </div>
-            <div class="about-content">
-                <div>
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='grad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23grad2)' opacity='0.1' rx='20'/%3E%3Ccircle cx='200' cy='150' r='50' fill='url(%23grad2)' opacity='0.3'/%3E%3Crect x='150' y='220' width='100' height='100' fill='url(%23grad2)' opacity='0.2' rx='10'/%3E%3Ctext x='200' y='160' text-anchor='middle' fill='%23667eea' font-size='20' font-weight='bold'%3E👨‍💻%3C/text%3E%3C/svg%3E" alt="About Me" class="about-img">
+            <div class="awards-grid">
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Best In Computer Programming</h3>
+                    <div class="award-issuer">Academic Institution</div>
+                    <div class="award-year">July 2025</div>
+                    <div class="award-description">
+                        Recognized for exceptional programming skills and outstanding 
+                        performance in computer programming coursework and projects.
+                    </div>
                 </div>
-                <div class="about-text">
-                    <h3>Full Stack Developer</h3>
-                    <p>I am a dedicated and results-driven developer with a proven track record of creating innovative web solutions. With a keen understanding of both frontend and backend technologies, I excel in building scalable applications and delivering value-driven solutions that meet both client and business objectives.</p>
-                    
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <strong>Name:</strong>
-                            <span>Aljhon Caangay</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Age:</strong>
-                            <span>23 years old</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Address:</strong>
-                            <span>Philippines</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Nationality:</strong>
-                            <span>Filipino</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Phone:</strong>
-                            <span>+63 905 7466 197</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Email:</strong>
-                            <span>aljhoncaangay@gmail.com</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Facebook:</strong>
-                            <span>Aljhon Caangay</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>Languages:</strong>
-                            <span>Tagalog, English, Cebuano</span>
-                        </div>
+
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Snowflake Data Engineering Essentials</h3>
+                    <div class="award-issuer">Snowflake</div>
+                    <div class="award-year">December 2024</div>
+                    <div class="award-description">
+                        Successfully demonstrated ability to convert timezones, map locations via IP addresses,
+                        create tasks and merge statements, and work with stream functionality.
+                    </div>
+                    <a href="https://achieve.snowflake.com/b7792517-f25b-49c9-b507-2205d5716798?fbclid=IwY2xjawKz7qNleHRuA2FlbQIxMQABHq-3O_iaNfnox9r2hNMrTj53aCgPh16WdJCjD_iqyD4VhdiKNXwGeLSD1wzu_aem_86QhZr2wzn9ZnZtWVscjLA#acc.mU18WDH4" 
+                       class="certificate-link" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt"></i>View Certificate
+                    </a>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-lake"></i>
+                    </div>
+                    <h3>Snowflake Data Lake Essentials</h3>
+                    <div class="award-issuer">Snowflake</div>
+                    <div class="award-year">December 2024</div>
+                    <div class="award-description">
+                        Certified in creating and editing STAGE objects, querying GeoSpatial data,
+                        working with external tables, materialized views, and Parquet data.
+                    </div>
+                    <a href="https://achieve.snowflake.com/1e8118e5-b638-46c9-b775-db97fd4a66a5?fbclid=IwY2xjawKz7qxleHRuA2FlbQIxMQABHjQdFdqqQLUaViMtA4Zzjr-y9jrxBIC9hJQ8rqzuKWPQnu8DRWKQQZdsMWvp_aem_SSU_fqoUzQQWKzh5G3an5g#acc.DhzngVRj" 
+                       class="certificate-link" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt"></i>View Certificate
+                    </a>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>Snowflake Data Warehouse Essentials</h3>
+                    <div class="award-issuer">Snowflake</div>
+                    <div class="award-year">October 2024</div>
+                    <div class="award-description">
+                        Hands-on certification demonstrating proficiency in creating tables and file formats,
+                        compute resources, copy into statements, and transforming CSV and JSON data.
+                    </div>
+                    <a href="https://achieve.snowflake.com/035477d2-5841-4e60-8516-f5d0f5863e2c?fbclid=IwY2xjawKz7qdleHRuA2FlbQIxMQABHr5ZoFZ7gG440hHCWTgITNkGnkdiFvx0adPJ97XXt7KUEm06o6-9otzMsE1M_aem_1ZFj9wC6kIi31yt7bTJqqw#acc.f8hRNcIo" 
+                       class="certificate-link" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-external-link-alt"></i>View Certificate
+                    </a>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>8th International Online Conference 2024</h3>
+                    <div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div>
+                    <div class="award-year">November 2024</div>
+                    <div class="award-description">
+                        Certificate of Participation in Contemporary Studies in Management (CoSiM) 
+                        conference focusing on current management practices and innovations.
+                    </div>
+                </div>
+
+                <div class="award-item">
+                    <div class="award-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Balancing Innovation and Ethics in AI</h3>
+                    <div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div>
+                    <div class="award-year">August 2024</div>
+                    <div class="award-description">
+                        Participated in webinar on "Managing Risks and Ensuring Responsible AI Use in Education"
+                        during Silliman University's 123rd Founders Day celebration.
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section" style="background: #f8f9fa;">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Skills</h2>
-                <p>Technologies and tools I work with to bring ideas to life</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <div class="skill-name">
-                            <i class="fab fa-html5 skill-icon"></i>
-                            HTML
-                        </div>
-                        <div class="skill-percentage">85%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="85"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <div class="skill-name">
-                            <i class="fab fa-css3-alt skill-icon"></i>
-                            CSS
-                        </div>
-                        <div class="skill-percentage">80%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="80"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <div class="skill-name">
-                            <i class="fab fa-js-square skill-icon"></i>
-                            JavaScript
-                        </div>
-                        <div class="skill-percentage">75%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="75"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <div class="skill-name">
-                            <i class="fab fa-php skill-icon"></i>
-                            PHP
-                        </div>
-                        <div class="skill-percentage">70%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="70"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <div class="skill-name">
-                            <i class="fas fa-database skill-icon"></i>
-                            MySQL
-                        </div>
-                        <div class="skill-percentage">78%</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="78"></div>
-                    </div>
-                </div>
-            </div>
+    <!-- Projects Section -->
+<section id="projects" class="section" style="background: #f8f9fa">
+  <div class="container">
+    <div class="section-title">
+      <h2>My Projects & Systems</h2>
+      <p>Showcase of applications and systems I've developed</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image">
+          <i class="fas fa-bus"></i>
         </div>
-    </section>
+        <div class="project-content">
+          <h3>Bus Tracking System Using GPS with Data Analytics</h3>
+          <div class="project-type">Transportation Management System</div>
+          <div class="project-description">
+            Real-time bus tracking system with GPS integration and comprehensive data analytics. 
+            Features live location monitoring, route optimization, passenger analytics, and 
+            performance reporting for efficient fleet management.
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">OSRM</span>
+            <span class="tech-tag">Leaflet Maps</span>
+            <span class="tech-tag">Chart.js</span>
+            <span class="tech-tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">
+          <i class="fas fa-hospital-alt"></i>
+        </div>
+        <div class="project-content">
+          <h3>Zamboanga del Sur Medical Center - Inventory Management & Monitoring System</h3>
+          <div class="project-type">Healthcare Management System</div>
+          <div class="project-description">
+            Comprehensive inventory management system for medical supplies and equipment. 
+            Features real-time monitoring, automated alerts for low stock, expiration tracking, 
+            procurement management, and detailed reporting for efficient hospital operations.
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Bootstrap</span>
+            <span class="tech-tag">AJAX</span>
+            <span class="tech-tag">Chart.js</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">
+          <i class="fas fa-church"></i>
+        </div>
+        <div class="project-content">
+          <h3>Church The Body of Christ Napolan Chapel - Baptism Online Appointment</h3>
+          <div class="project-type">Religious Management System</div>
+          <div class="project-description">
+            Online baptism appointment system for church members. Features appointment scheduling, 
+            member registration, document management, notification system, and administrative 
+            dashboard for streamlined church operations and better member services.
+          </div>
+          <div class="project-tech">
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+</section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
