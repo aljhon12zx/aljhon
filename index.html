@@ -851,84 +851,8 @@
     </section>
 
     <script>
-// Initialize EmailJS with your public key - MAKE SURE THIS IS CORRECT
+// Initialize EmailJS with your public key
 emailjs.init("zzW2oUFbpP-JqoeS_");
-
-// Typing animation
-const typedTextElement = document.getElementById('typed-text');
-const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-
-function typeText() {
-    const currentText = textArray[textIndex];
-    
-    if (isDeleting) {
-        typedTextElement.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typedTextElement.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
-    }
-
-    let typeSpeed = isDeleting ? 100 : 150;
-
-    if (!isDeleting && charIndex === currentText.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % textArray.length;
-        typeSpeed = 500;
-    }
-
-    setTimeout(typeText, typeSpeed);
-}
-
-// Start typing animation when element exists
-if (typedTextElement) {
-    typeText();
-}
-
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Skills animation
-function animateSkills() {
-    const skillBars = document.querySelectorAll('.progress-fill');
-    skillBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        setTimeout(() => {
-            bar.style.width = width + '%';
-        }, 500);
-    });
-}
-
-// Intersection Observer for skills animation
-const skillsSection = document.querySelector('#skills');
-if (skillsSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateSkills();
-                observer.unobserve(skillsSection);
-            }
-        });
-    }, { threshold: 0.3 });
-    observer.observe(skillsSection);
-}
 
 // Email validation function
 function isValidEmail(email) {
@@ -965,7 +889,7 @@ function showError(message = 'Please fill in all required fields.') {
     }
 }
 
-// FIXED Contact form submission
+// FIXED Contact form submission with correct template parameters
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     
@@ -996,20 +920,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             }
             
-            // CORRECTED EmailJS template parameters
+            // CORRECTED EmailJS template parameters - matching your template exactly
             const templateParams = {
-                from_name: name,           // Sender's name
-                from_email: email,         // Sender's email
-                to_name: 'Aljhon',         // Your name (recipient)
-                subject: subject,          // Email subject
-                message: message,          // Email message
-                reply_to: email            // Reply-to address
+                name: name,                    // {{name}} - matches your template
+                title: subject,                // {{title}} - matches your template (using subject as title)
+                email: email,                  // {{email}} - matches your template
+                message: message               // {{message}} - add this if you have it in template
             };
             
             console.log('Sending email with parameters:', templateParams);
             
-            // Send email using EmailJS - VERIFY THESE IDs IN YOUR EMAILJS DASHBOARD
-            emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
+            // Send email using EmailJS - ALWAYS include templateParams as 3rd parameter
+            emailjs.send('service_b0gqcsa','template_a2tgv8x', templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     showSuccess();
@@ -1019,13 +941,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('FAILED...', error);
                     console.error('Error details:', error);
                     
-                    // More specific error handling
+                    // Enhanced error handling
                     if (error.status === 422) {
-                        showError('Template configuration error. Please check EmailJS template variables.');
+                        showError('Template variable mismatch. Please check your EmailJS template configuration.');
                     } else if (error.status === 400) {
-                        showError('Bad request. Please check your EmailJS configuration.');
+                        showError('Bad request. Please verify your EmailJS service and template IDs.');
                     } else if (error.status === 401) {
                         showError('Authentication failed. Please check your EmailJS public key.');
+                    } else if (error.status === 403) {
+                        showError('Access denied. Please check your EmailJS account permissions.');
+                    } else if (error.text && error.text.includes('template')) {
+                        showError('Template not found. Please verify your template ID.');
                     } else if (error.text) {
                         showError(`Failed to send: ${error.text}`);
                     } else {
