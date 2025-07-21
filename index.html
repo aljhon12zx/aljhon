@@ -851,179 +851,206 @@
     </section>
 
     <script>
-        // Initialize EmailJS with your public key - REPLACE WITH YOUR ACTUAL KEY
-         emailjs.init("zzW2oUFbpP-JqoeS_");
+// Initialize EmailJS with your public key - MAKE SURE THIS IS CORRECT
+emailjs.init("zzW2oUFbpP-JqoeS_");
 
-        // Typing animation
-        const typedTextElement = document.getElementById('typed-text');
-        const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+// Typing animation
+const typedTextElement = document.getElementById('typed-text');
+const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
 
-        function typeText() {
-            const currentText = textArray[textIndex];
-            
-            if (isDeleting) {
-                typedTextElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTextElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 100 : 150;
-
-            if (!isDeleting && charIndex === currentText.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % textArray.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(typeText, typeSpeed);
-        }
-
-        // Start typing animation
-        typeText();
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Skills animation
-        function animateSkills() {
-            const skillBars = document.querySelectorAll('.progress-fill');
-            skillBars.forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                setTimeout(() => {
-                    bar.style.width = width + '%';
-                }, 500);
-            });
-        }
-
-        // Intersection Observer for skills animation
-        const skillsSection = document.querySelector('#skills');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkills();
-                    observer.unobserve(skillsSection);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        if (skillsSection) {
-            observer.observe(skillsSection);
-        }
-
-        // Email validation function
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Show success message
-        function showSuccess() {
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 5000);
-        }
-
-        // Show error message
-        function showError(message = 'Please fill in all required fields.') {
-            document.getElementById('successMessage').style.display = 'none';
-            const errorElement = document.getElementById('errorMessage');
-            errorElement.textContent = `❌ ${message}`;
-            errorElement.style.display = 'block';
-            setTimeout(() => {
-                errorElement.style.display = 'none';
-            }, 5000);
-        }
-
-        // Contact form submission - WORKING EMAILJS VERSION
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function typeText() {
+    const currentText = textArray[textIndex];
     
-    const submitBtn = document.getElementById('submitBtn');
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    // Validation
-    if (!name || !email || !subject || !message) {
-        showError('Please fill in all required fields.');
-        return;
+    if (isDeleting) {
+        typedTextElement.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typedTextElement.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
     }
-    
-    if (!isValidEmail(email)) {
-        showError('Please enter a valid email address.');
-        return;
+
+    let typeSpeed = isDeleting ? 100 : 150;
+
+    if (!isDeleting && charIndex === currentText.length) {
+        typeSpeed = 2000;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % textArray.length;
+        typeSpeed = 500;
     }
-    
-    // Disable submit button
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    
-    // EmailJS template parameters - PROPERLY CONFIGURED
-    const templateParams = {
-        to_name: 'Aljhon',                    // Your name
-        to_email: 'aljhoncaangay@gmail.com',  // Your email (recipient)
-        from_name: name,                      // Sender's name
-        from_email: email,                    // Sender's email  
-        subject: subject,                     // Email subject
-        message: message,                     // Email message
-        reply_to: email                       // Reply-to address
-    };
-    
-    console.log('Sending email with parameters:', templateParams);
-    
-    // Send email using EmailJS
-    emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            showSuccess();
-            document.getElementById('contactForm').reset();
-        })
-        .catch(function(error) {
-            console.error('FAILED...', error);
-            
-            // More specific error handling
-            if (error.status === 422) {
-                showError('Email configuration error. Please contact me directly.');
-            } else if (error.status === 400) {
-                showError('Invalid email format. Please check your input.');
-            } else {
-                showError('Failed to send message. Please try again or contact me directly.');
-            }
-        })
-        .finally(function() {
-            // Re-enable submit button
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        });
+
+    setTimeout(typeText, typeSpeed);
+}
+
+// Start typing animation when element exists
+if (typedTextElement) {
+    typeText();
+}
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
-        // Download resume functionality
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+
+// Skills animation
+function animateSkills() {
+    const skillBars = document.querySelectorAll('.progress-fill');
+    skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => {
+            bar.style.width = width + '%';
+        }, 500);
+    });
+}
+
+// Intersection Observer for skills animation
+const skillsSection = document.querySelector('#skills');
+if (skillsSection) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkills();
+                observer.unobserve(skillsSection);
+            }
+        });
+    }, { threshold: 0.3 });
+    observer.observe(skillsSection);
+}
+
+// Email validation function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Show success message
+function showSuccess() {
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+    
+    if (errorMessage) errorMessage.style.display = 'none';
+    if (successMessage) {
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 5000);
+    }
+}
+
+// Show error message
+function showError(message = 'Please fill in all required fields.') {
+    const successMessage = document.getElementById('successMessage');
+    const errorElement = document.getElementById('errorMessage');
+    
+    if (successMessage) successMessage.style.display = 'none';
+    if (errorElement) {
+        errorElement.textContent = `❌ ${message}`;
+        errorElement.style.display = 'block';
+        setTimeout(() => {
+            errorElement.style.display = 'none';
+        }, 5000);
+    }
+}
+
+// FIXED Contact form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Create a sample resume data
-            const resumeContent = `
+            const submitBtn = document.getElementById('submitBtn');
+            const name = document.getElementById('name')?.value?.trim() || '';
+            const email = document.getElementById('email')?.value?.trim() || '';
+            const subject = document.getElementById('subject')?.value?.trim() || '';
+            const message = document.getElementById('message')?.value?.trim() || '';
+            
+            // Validation
+            if (!name || !email || !subject || !message) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address.');
+                return;
+            }
+            
+            // Disable submit button
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            }
+            
+            // CORRECTED EmailJS template parameters
+            const templateParams = {
+                from_name: name,           // Sender's name
+                from_email: email,         // Sender's email
+                to_name: 'Aljhon',         // Your name (recipient)
+                subject: subject,          // Email subject
+                message: message,          // Email message
+                reply_to: email            // Reply-to address
+            };
+            
+            console.log('Sending email with parameters:', templateParams);
+            
+            // Send email using EmailJS - VERIFY THESE IDs IN YOUR EMAILJS DASHBOARD
+            emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showSuccess();
+                    contactForm.reset();
+                })
+                .catch(function(error) {
+                    console.error('FAILED...', error);
+                    console.error('Error details:', error);
+                    
+                    // More specific error handling
+                    if (error.status === 422) {
+                        showError('Template configuration error. Please check EmailJS template variables.');
+                    } else if (error.status === 400) {
+                        showError('Bad request. Please check your EmailJS configuration.');
+                    } else if (error.status === 401) {
+                        showError('Authentication failed. Please check your EmailJS public key.');
+                    } else if (error.text) {
+                        showError(`Failed to send: ${error.text}`);
+                    } else {
+                        showError('Failed to send message. Please try again or contact me directly.');
+                    }
+                })
+                .finally(function() {
+                    // Re-enable submit button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                    }
+                });
+        });
+    }
+});
+
+// Download resume functionality
+const downloadBtn = document.getElementById('downloadBtn');
+if (downloadBtn) {
+    downloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Create a sample resume data
+        const resumeContent = `
 ALJHON CAANGAY
 Full Stack Developer
 
@@ -1054,132 +1081,135 @@ Languages:
 Personal Information:
 Age: 23 years old
 Nationality: Filipino
-            `;
-            
-            // Create and download the resume file
-            const blob = new Blob([resumeContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Aljhon_Caangay_Resume.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        });
+        `;
+        
+        // Create and download the resume file
+        const blob = new Blob([resumeContent], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Aljhon_Caangay_Resume.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    });
+}
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = 'none';
+        }
+    }
+});
+
+// Add scroll animation to elements
+function addScrollAnimation() {
+    const elements = document.querySelectorAll('.section');
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        scrollObserver.observe(element);
+    });
+}
+
+// Mobile menu functionality
+function initMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            const isVisible = navMenu.style.display === 'flex';
+            
+            if (isVisible) {
+                navMenu.style.display = 'none';
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = 'none';
+                navMenu.style.display = 'flex';
+                hamburger.innerHTML = '<i class="fas fa-times"></i>';
             }
         });
 
-        // Add scroll animation to elements
-        function addScrollAnimation() {
-            const elements = document.querySelectorAll('.section');
-            
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            elements.forEach(element => {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(30px)';
-                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                scrollObserver.observe(element);
-            });
-        }
-
-        // Mobile menu functionality
-        function initMobileMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
-                    const isVisible = navMenu.style.display === 'flex';
-                    
-                    if (isVisible) {
-                        navMenu.style.display = 'none';
-                        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                    } else {
-                        navMenu.style.display = 'flex';
-                        hamburger.innerHTML = '<i class="fas fa-times"></i>';
-                    }
-                });
-
-                // Close menu when clicking on nav links
-                const navLinks = document.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 768) {
-                            navMenu.style.display = 'none';
-                            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                        }
-                    });
-                });
-            }
-        }
-
-        // Handle responsive behavior
-        function handleResize() {
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburger = document.querySelector('.hamburger');
-            
-            if (window.innerWidth > 768) {
-                if (navMenu) {
-                    navMenu.style.display = 'flex';
-                    navMenu.style.position = 'static';
-                    navMenu.style.flexDirection = 'row';
-                    navMenu.style.background = 'none';
-                    navMenu.style.boxShadow = 'none';
-                    navMenu.style.padding = '0';
-                }
-                if (hamburger) {
-                    hamburger.style.display = 'none';
-                }
-            } else {
-                if (navMenu) {
+        // Close menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
                     navMenu.style.display = 'none';
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
                 }
-                if (hamburger) {
-                    hamburger.style.display = 'block';
-                }
-            }
+            });
+        });
+    }
+}
+
+// Handle responsive behavior
+function handleResize() {
+    const navMenu = document.querySelector('.nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+    
+    if (window.innerWidth > 768) {
+        if (navMenu) {
+            navMenu.style.display = 'flex';
+            navMenu.style.position = 'static';
+            navMenu.style.flexDirection = 'row';
+            navMenu.style.background = 'none';
+            navMenu.style.boxShadow = 'none';
+            navMenu.style.padding = '0';
         }
+        if (hamburger) {
+            hamburger.style.display = 'none';
+        }
+    } else {
+        if (navMenu) {
+            navMenu.style.display = 'none';
+        }
+        if (hamburger) {
+            hamburger.style.display = 'block';
+        }
+    }
+}
 
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            addScrollAnimation();
-            initMobileMenu();
-            handleResize();
-            
-            // Add loading animation
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    addScrollAnimation();
+    initMobileMenu();
+    handleResize();
+    
+    // Add loading animation
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
+});
 
-        // Handle window resize
-        window.addEventListener('resize', handleResize);
+// Handle window resize
+window.addEventListener('resize', handleResize);
 
-        // Add smooth page loading
-        window.addEventListener('load', function() {
-            document.body.classList.add('loaded');
-        });
+// Add smooth page loading
+window.addEventListener('load', function() {
+    document.body.classList.add('loaded');
+});
     </script>
 </body>
 </html>
