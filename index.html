@@ -955,71 +955,69 @@
             }, 5000);
         }
 
-        // Contact form submission - SIMPLIFIED VERSION WITHOUT EMAILJS
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Contact form submission - WORKING EMAILJS VERSION
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    // Validation
+    if (!name || !email || !subject || !message) {
+        showError('Please fill in all required fields.');
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        showError('Please enter a valid email address.');
+        return;
+    }
+    
+    // Disable submit button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    
+    // EmailJS template parameters - PROPERLY CONFIGURED
+    const templateParams = {
+        to_name: 'Aljhon',                    // Your name
+        to_email: 'aljhoncaangay@gmail.com',  // Your email (recipient)
+        from_name: name,                      // Sender's name
+        from_email: email,                    // Sender's email  
+        subject: subject,                     // Email subject
+        message: message,                     // Email message
+        reply_to: email                       // Reply-to address
+    };
+    
+    console.log('Sending email with parameters:', templateParams);
+    
+    // Send email using EmailJS
+    emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            showSuccess();
+            document.getElementById('contactForm').reset();
+        })
+        .catch(function(error) {
+            console.error('FAILED...', error);
             
-            const submitBtn = document.getElementById('submitBtn');
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            // Validation
-            if (!name || !email || !subject || !message) {
-                showError('Please fill in all required fields.');
-                return;
+            // More specific error handling
+            if (error.status === 422) {
+                showError('Email configuration error. Please contact me directly.');
+            } else if (error.status === 400) {
+                showError('Invalid email format. Please check your input.');
+            } else {
+                showError('Failed to send message. Please try again or contact me directly.');
             }
-            
-            if (!isValidEmail(email)) {
-                showError('Please enter a valid email address.');
-                return;
-            }
-            
-            // Disable submit button
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            
-            // Simulate sending (replace this with actual EmailJS implementation)
-            setTimeout(() => {
-                showSuccess();
-                document.getElementById('contactForm').reset();
-                
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-            }, 2000);
-
-             //UNCOMMENT AND CONFIGURE THIS SECTION FOR ACTUAL EMAIL SENDING:
-            
-            // EmailJS template parameters
-            const templateParams = {
-                from_name: name,
-                from_email: email,
-                subject: subject,
-                message: message,
-                to_email: 'aljhoncaangay@gmail.com'
-            };
-            
-            // Send email using EmailJS - REPLACE WITH YOUR ACTUAL SERVICE AND TEMPLATE IDs
-            emailjs.send('service_b0gqcsa', 'template_ze1hqpm', templateParams)
-                .then(function(response) {
-                    console.log('Email sent successfully:', response);
-                    showSuccess();
-                    document.getElementById('contactForm').reset();
-                })
-                .catch(function(error) {
-                    console.error('Email sending failed:', error);
-                    showError('Failed to send message. Please try again or contact me directly.');
-                })
-                .finally(function() {
-                    // Re-enable submit button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                });
-            
+        })
+        .finally(function() {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
         });
-
+});
         // Download resume functionality
         document.getElementById('downloadBtn').addEventListener('click', function(e) {
             e.preventDefault();
