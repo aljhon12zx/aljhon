@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- EmailJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -28,19 +29,18 @@
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1rem 2rem;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .logo {
@@ -62,8 +62,8 @@
             text-decoration: none;
             color: #333;
             font-weight: 500;
-            position: relative;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-link:hover {
@@ -73,10 +73,10 @@
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
             width: 0;
             height: 2px;
+            bottom: -5px;
+            left: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transition: width 0.3s ease;
         }
@@ -88,9 +88,10 @@
         /* Hero Section */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             position: relative;
             overflow: hidden;
         }
@@ -102,7 +103,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="25" cy="75" r="1" fill="white" opacity="0.05"/><circle cx="75" cy="25" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background: rgba(0, 0, 0, 0.1);
         }
 
         .hero-content {
@@ -120,57 +121,70 @@
         .hero-text h1 {
             font-size: 3.5rem;
             font-weight: 800;
-            color: white;
             margin-bottom: 1rem;
-            line-height: 1.1;
+            opacity: 0;
+            animation: slideInLeft 1s ease 0.2s forwards;
         }
 
-        .hero-text .subtitle {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
+        .subtitle {
+            font-size: 1.2rem;
             margin-bottom: 2rem;
+            opacity: 0.9;
+            opacity: 0;
+            animation: slideInLeft 1s ease 0.4s forwards;
         }
 
         .typed-text {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 600;
+            margin-bottom: 2rem;
+            min-height: 2.5rem;
             color: #ffd700;
-            min-height: 2rem;
+            opacity: 0;
+            animation: slideInLeft 1s ease 0.6s forwards;
+        }
+
+        .typed-text::after {
+            content: '|';
+            animation: blink 1s infinite;
         }
 
         .hero-buttons {
             display: flex;
             gap: 1rem;
-            margin-top: 2rem;
+            opacity: 0;
+            animation: slideInLeft 1s ease 0.8s forwards;
         }
 
         .btn {
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
             transition: all 0.3s ease;
-            cursor: pointer;
+            border: 2px solid transparent;
         }
 
         .btn-primary {
             background: white;
             color: #667eea;
+            border-color: white;
         }
 
         .btn-primary:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .btn-outline {
             background: transparent;
             color: white;
-            border: 2px solid white;
+            border-color: white;
         }
 
         .btn-outline:hover {
@@ -180,33 +194,32 @@
         }
 
         .hero-image {
-            text-align: center;
-            position: relative;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            animation: slideInRight 1s ease 0.4s forwards;
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
         }
 
         .profile-img {
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            border: 4px solid rgba(255, 255, 255, 0.3);
         }
 
-        .profile-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Sections */
+        /* Section Styles */
         .section {
-            padding: 5rem 2rem;
+            padding: 5rem 0;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .section-title {
@@ -242,62 +255,60 @@
         .about-img {
             width: 100%;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
         }
 
         .about-text h3 {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 1rem;
             color: #667eea;
         }
 
         .about-text p {
-            margin-bottom: 2rem;
+            font-size: 1.1rem;
             color: #666;
+            margin-bottom: 2rem;
             line-height: 1.8;
         }
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
             padding: 0.5rem;
         }
 
         .info-item strong {
-            color: #333;
-            min-width: 100px;
-        }
-
-        .info-item span {
             color: #667eea;
+            min-width: 100px;
         }
 
         /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .skill-item {
             background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            border: 1px solid rgba(102, 126, 234, 0.1);
         }
 
         .skill-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
         }
 
         .skill-header {
@@ -308,11 +319,11 @@
         }
 
         .skill-name {
-            font-weight: 600;
-            color: #333;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 600;
+            color: #333;
         }
 
         .skill-icon {
@@ -326,24 +337,24 @@
         }
 
         .progress-bar {
-            height: 8px;
+            height: 10px;
             background: #f0f0f0;
-            border-radius: 4px;
+            border-radius: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 4px;
-            transition: width 2s ease;
             width: 0;
+            transition: width 1.5s ease;
+            border-radius: 10px;
         }
 
         /* Contact Section */
         .contact-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 4rem;
         }
 
@@ -351,7 +362,7 @@
             background: white;
             padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -367,11 +378,12 @@
 
         .form-control {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 1rem;
             border: 2px solid #f0f0f0;
             border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         .form-control:focus {
@@ -381,43 +393,16 @@
         }
 
         textarea.form-control {
-            resize: vertical;
             min-height: 120px;
+            resize: vertical;
         }
 
-        .contact-info {
-            padding: 2rem 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .success-message,
-        .error-message {
+        .success-message, .error-message {
+            display: none;
             padding: 1rem;
             border-radius: 10px;
             margin-bottom: 1rem;
-            display: none;
+            font-weight: 500;
         }
 
         .success-message {
@@ -432,17 +417,106 @@
             border: 1px solid #f5c6cb;
         }
 
-        /* Button disabled state */
-        .btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none !important;
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
-        /* Responsive */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .contact-item p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Mobile Responsiveness */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .hamburger {
+                display: block;
             }
 
             .hero-content {
@@ -455,46 +529,66 @@
                 font-size: 2.5rem;
             }
 
-            .about-content,
+            .typed-text {
+                font-size: 1.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
-            .hero-buttons {
-                justify-content: center;
-            }
-
             .info-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: center;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
             }
         }
 
-        .animate-on-scroll {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
 
-        /* Floating elements */
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
+            .nav-container {
+                padding: 1rem;
+            }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -509,6 +603,9 @@
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
@@ -754,168 +851,181 @@
     </section>
 
     <script>
-      // Initialize EmailJS with your public key
-emailjs.init("zzW2oUFbpP-JqoeS_");
+        // Initialize EmailJS with your public key - REPLACE WITH YOUR ACTUAL KEY
+        // emailjs.init("YOUR_ACTUAL_PUBLIC_KEY_HERE");
 
-// Typing animation
-const typedTextElement = document.getElementById('typed-text');
-const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
+        // Typing animation
+        const typedTextElement = document.getElementById('typed-text');
+        const textArray = ['PROGRAMMER', 'FULL STACK DEVELOPER', 'WEB DEVELOPER', 'PROBLEM SOLVER'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
 
-function typeText() {
-    const currentText = textArray[textIndex];
-    
-    if (isDeleting) {
-        typedTextElement.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typedTextElement.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
-    }
+        function typeText() {
+            const currentText = textArray[textIndex];
+            
+            if (isDeleting) {
+                typedTextElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
 
-    let typeSpeed = isDeleting ? 100 : 150;
+            let typeSpeed = isDeleting ? 100 : 150;
 
-    if (!isDeleting && charIndex === currentText.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % textArray.length;
-        typeSpeed = 500;
-    }
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % textArray.length;
+                typeSpeed = 500;
+            }
 
-    setTimeout(typeText, typeSpeed);
-}
+            setTimeout(typeText, typeSpeed);
+        }
 
-// Start typing animation
-typeText();
+        // Start typing animation
+        typeText();
 
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Skills animation
+        function animateSkills() {
+            const skillBars = document.querySelectorAll('.progress-fill');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 500);
             });
         }
-    });
-});
 
-// Skills animation
-function animateSkills() {
-    const skillBars = document.querySelectorAll('.progress-fill');
-    skillBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        setTimeout(() => {
-            bar.style.width = width + '%';
-        }, 500);
-    });
-}
+        // Intersection Observer for skills animation
+        const skillsSection = document.querySelector('#skills');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkills();
+                    observer.unobserve(skillsSection);
+                }
+            });
+        }, { threshold: 0.3 });
 
-// Intersection Observer for skills animation
-const skillsSection = document.querySelector('#skills');
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateSkills();
-            observer.unobserve(skillsSection);
+        if (skillsSection) {
+            observer.observe(skillsSection);
         }
-    });
-}, { threshold: 0.3 });
 
-if (skillsSection) {
-    observer.observe(skillsSection);
-}
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
 
-// Email validation function
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+        // Show success message
+        function showSuccess() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        }
 
-// Show success message
-function showSuccess() {
-    document.getElementById('errorMessage').style.display = 'none';
-    document.getElementById('successMessage').style.display = 'block';
-    setTimeout(() => {
-        document.getElementById('successMessage').style.display = 'none';
-    }, 5000);
-}
+        // Show error message
+        function showError(message = 'Please fill in all required fields.') {
+            document.getElementById('successMessage').style.display = 'none';
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = `❌ ${message}`;
+            errorElement.style.display = 'block';
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
 
-// Show error message
-function showError(message = 'Please fill in all required fields.') {
-    document.getElementById('successMessage').style.display = 'none';
-    const errorElement = document.getElementById('errorMessage');
-    errorElement.textContent = `❌ ${message}`;
-    errorElement.style.display = 'block';
-    setTimeout(() => {
-        errorElement.style.display = 'none';
-    }, 5000);
-}
+        // Contact form submission - SIMPLIFIED VERSION WITHOUT EMAILJS
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validation
+            if (!name || !email || !subject || !message) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address.');
+                return;
+            }
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            // Simulate sending (replace this with actual EmailJS implementation)
+            setTimeout(() => {
+                showSuccess();
+                document.getElementById('contactForm').reset();
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            }, 2000);
 
-// Contact form submission
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = document.getElementById('submitBtn');
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    // Validation
-    if (!name || !email || !subject || !message) {
-        showError('Please fill in all required fields.');
-        return;
-    }
-    
-    if (!isValidEmail(email)) {
-        showError('Please enter a valid email address.');
-        return;
-    }
-    
-    // Disable submit button
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    
-    // EmailJS template parameters
-    const templateParams = {
-        from_name: name,
-        from_email: email,
-        subject: subject,
-        message: message,
-        to_email: 'aljhoncaangay@gmail.com'
-    };
-    
-    // Send email using EmailJS
-    emailjs.send('service_your_service_id', 'template_your_template_id', templateParams)
-        .then(function(response) {
-            console.log('Email sent successfully:', response);
-            showSuccess();
-            document.getElementById('contactForm').reset();
-        })
-        .catch(function(error) {
-            console.error('Email sending failed:', error);
-            showError('Failed to send message. Please try again or contact me directly.');
-        })
-        .finally(function() {
-            // Re-enable submit button
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            /* UNCOMMENT AND CONFIGURE THIS SECTION FOR ACTUAL EMAIL SENDING:
+            
+            // EmailJS template parameters
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                subject: subject,
+                message: message,
+                to_email: 'aljhoncaangay@gmail.com'
+            };
+            
+            // Send email using EmailJS - REPLACE WITH YOUR ACTUAL SERVICE AND TEMPLATE IDs
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    showSuccess();
+                    document.getElementById('contactForm').reset();
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    showError('Failed to send message. Please try again or contact me directly.');
+                })
+                .finally(function() {
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                });
+            */
         });
-});
 
-// Download resume functionality
-document.getElementById('downloadBtn').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    // Create a sample resume data (you can replace this with actual resume content)
-    const resumeContent = `
+        // Download resume functionality
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create a sample resume data
+            const resumeContent = `
 ALJHON CAANGAY
 Full Stack Developer
 
@@ -946,153 +1056,132 @@ Languages:
 Personal Information:
 Age: 23 years old
 Nationality: Filipino
-    `;
-    
-    // Create and download the resume file
-    const blob = new Blob([resumeContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Aljhon_Caangay_Resume.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-});
-
-// Navbar scroll effect
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-});
-
-// Add scroll animation to elements
-function addScrollAnimation() {
-    const elements = document.querySelectorAll('.section');
-    
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+            `;
+            
+            // Create and download the resume file
+            const blob = new Blob([resumeContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Aljhon_Caangay_Resume.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
         });
-    }, { threshold: 0.1 });
-    
-    elements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        scrollObserver.observe(element);
-    });
-}
 
-// Initialize scroll animations when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    addScrollAnimation();
-});
-
-// Mobile menu toggle (if you want to add mobile menu functionality)
-function toggleMobileMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    const navbar = document.querySelector('.navbar');
-    
-    // Create hamburger button if it doesn't exist
-    let hamburger = document.querySelector('.hamburger');
-    if (!hamburger) {
-        hamburger = document.createElement('div');
-        hamburger.className = 'hamburger';
-        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-        hamburger.style.display = 'none';
-        hamburger.style.fontSize = '1.5rem';
-        hamburger.style.cursor = 'pointer';
-        hamburger.style.color = '#667eea';
-        
-        document.querySelector('.nav-container').appendChild(hamburger);
-        
-        // Show hamburger on mobile
-        if (window.innerWidth <= 768) {
-            hamburger.style.display = 'block';
-            navMenu.style.display = 'none';
-        }
-        
-        hamburger.addEventListener('click', function() {
-            if (navMenu.style.display === 'none' || navMenu.style.display === '') {
-                navMenu.style.display = 'flex';
-                navMenu.style.position = 'absolute';
-                navMenu.style.top = '100%';
-                navMenu.style.left = '0';
-                navMenu.style.right = '0';
-                navMenu.style.background = 'white';
-                navMenu.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-                navMenu.style.flexDirection = 'column';
-                navMenu.style.padding = '1rem';
-                hamburger.innerHTML = '<i class="fas fa-times"></i>';
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
             } else {
-                navMenu.style.display = 'none';
-                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
             }
         });
-    }
-}
 
-// Handle responsive behavior
-window.addEventListener('resize', function() {
-    const navMenu = document.querySelector('.nav-menu');
-    const hamburger = document.querySelector('.hamburger');
-    
-    if (window.innerWidth > 768) {
-        navMenu.style.display = 'flex';
-        navMenu.style.position = 'static';
-        navMenu.style.flexDirection = 'row';
-        navMenu.style.background = 'none';
-        navMenu.style.boxShadow = 'none';
-        navMenu.style.padding = '0';
-        if (hamburger) hamburger.style.display = 'none';
-    } else {
-        navMenu.style.display = 'none';
-        if (hamburger) hamburger.style.display = 'block';
-        toggleMobileMenu();
-    }
-});
+        // Add scroll animation to elements
+        function addScrollAnimation() {
+            const elements = document.querySelectorAll('.section');
+            
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                scrollObserver.observe(element);
+            });
+        }
 
-// Initialize mobile menu on page load
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.innerWidth <= 768) {
-        toggleMobileMenu();
-    }
-});
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    const isVisible = navMenu.style.display === 'flex';
+                    
+                    if (isVisible) {
+                        navMenu.style.display = 'none';
+                        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                    } else {
+                        navMenu.style.display = 'flex';
+                        hamburger.innerHTML = '<i class="fas fa-times"></i>';
+                    }
+                });
 
-// Add loading animation
-window.addEventListener('load', function() {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
+                // Close menu when clicking on nav links
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            navMenu.style.display = 'none';
+                            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                    });
+                });
+            }
+        }
 
-// Preload images for better performance
-function preloadImages() {
-    const imageUrls = [
-        // Add any image URLs you want to preload here
-    ];
-    
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
-    });
-}
+        // Handle responsive behavior
+        function handleResize() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (window.innerWidth > 768) {
+                if (navMenu) {
+                    navMenu.style.display = 'flex';
+                    navMenu.style.position = 'static';
+                    navMenu.style.flexDirection = 'row';
+                    navMenu.style.background = 'none';
+                    navMenu.style.boxShadow = 'none';
+                    navMenu.style.padding = '0';
+                }
+                if (hamburger) {
+                    hamburger.style.display = 'none';
+                }
+            } else {
+                if (navMenu) {
+                    navMenu.style.display = 'none';
+                }
+                if (hamburger) {
+                    hamburger.style.display = 'block';
+                }
+            }
+        }
 
-// Initialize preloading
-preloadImages();
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            addScrollAnimation();
+            initMobileMenu();
+            handleResize();
+            
+            // Add loading animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
 
+        // Handle window resize
+        window.addEventListener('resize', handleResize);
+
+        // Add smooth page loading
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
     </script>
 </body>
 </html>
