@@ -635,15 +635,11 @@
           <p class="subtitle">Passionate about creating digital solutions</p>
           <div class="typed-text" id="typed-text">PROGRAMMER</div>
           <div class="hero-buttons">
-            <a
-              href="pdf/My_Resume.pdf"
-              class="btn btn-primary"
-              id="downloadBtn"
-              download="Aljhon_Resume.pdf"
-            >
-              <i class="fas fa-download"></i>
-              Download Resume
-            </a>
+            <!-- Updated Download Button HTML -->
+<a href="pdf/My_Resume.pdf" class="btn btn-primary" id="downloadBtn" download="Aljhon_Resume.pdf">
+  <i class="fas fa-download"></i>
+  Download Resume
+</a>
             <a href="#contact" class="btn btn-outline">
               <i class="fas fa-envelope"></i>
               Get In Touch
@@ -1044,58 +1040,23 @@
         }
       });
 
-      // Download resume functionality
-      const downloadBtn = document.getElementById("downloadBtn");
-      if (downloadBtn) {
-        downloadBtn.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          // Create a sample resume data
-          const resumeContent = `
-ALJHON CAANGAY
-Full Stack Developer
-
-Contact Information:
-Phone: +63 905 7466 197
-Email: aljhoncaangay@gmail.com
-Location: Philippines
-Facebook: Aljhon Caangay
-
-About:
-I am a dedicated and results-driven developer with a proven track record of creating 
-innovative web solutions. With a keen understanding of both frontend and backend 
-technologies, I excel in building scalable applications and delivering value-driven 
-solutions that meet both client and business objectives.
-
-Skills:
-- HTML (85%)
-- CSS (80%)
-- JavaScript (75%)
-- PHP (70%)
-- MySQL (78%)
-
-Languages:
-- Tagalog
-- English
-- Cebuano
-
-Personal Information:
-Age: 23 years old
-Nationality: Filipino
-        `;
-
-          // Create and download the resume file
-          const blob = new Blob([resumeContent], { type: "text/plain" });
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "Aljhon_Caangay_Resume.txt";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        });
-      }
+     document.addEventListener('DOMContentLoaded', function() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    
+    downloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = 'pdf/My Resume.pdf';
+        link.download = 'Aljhon_Resume.pdf'; // This will be the downloaded filename
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
 
       // Navbar scroll effect
       window.addEventListener("scroll", function () {
