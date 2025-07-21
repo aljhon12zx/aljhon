@@ -780,79 +780,82 @@
         }
       }
 
-      /* Mobile Responsiveness */
-      @media (max-width: 768px) {
-        .nav-container {
-          padding: 1rem;
-        }
+      /* Mobile Navigation Fix - Replace your existing mobile CSS with this */
 
-        .logo {
-          font-size: 1rem;
-        }
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 1rem;
+  }
 
-        .nav-menu {
-          display: none;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: white;
-          flex-direction: column;
-          padding: 1rem;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          gap: 0.5rem;
-        }
+  .logo {
+    font-size: 1rem;
+  }
 
-        .nav-menu.active {
-          display: flex;
-        }
+  .nav-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    gap: 0.5rem;
+  }
 
-        .hamburger {
-          display: block;
-        }
+  /* Show menu when active class is added */
+  .nav-menu.active {
+    display: flex !important;
+  }
 
-        .hero {
-          padding-top: 100px;
-          min-height: auto;
-          padding-bottom: 3rem;
-        }
+  .hamburger {
+    display: block;
+  }
 
-        .hero-content {
-          grid-template-columns: 1fr;
-          text-align: center;
-          gap: 2rem;
-          padding: 0 1rem;
-        }
+  /* Other existing mobile styles remain the same */
+  .hero {
+    padding-top: 100px;
+    min-height: auto;
+    padding-bottom: 3rem;
+  }
 
-        .hero-text h1 {
-          font-size: 2.5rem;
-          line-height: 1.2;
-        }
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
 
-        .typed-text {
-          font-size: 1.5rem;
-        }
+  .hero-text h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
 
-        .subtitle {
-          font-size: 1rem;
-        }
+  .typed-text {
+    font-size: 1.5rem;
+  }
 
-        .hero-buttons {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 1rem;
-        }
+  .subtitle {
+    font-size: 1rem;
+  }
 
-        .btn {
-          width: 100%;
-          padding: 1rem;
-          font-size: 0.9rem;
-        }
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
 
-        .profile-img {
-          width: 250px;
-          height: 250px;
-        }
+  .btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-img {
+    width: 250px;
+    height: 250px;
+  }
 
         .section {
           padding: 3rem 0;
@@ -1835,64 +1838,7 @@
         });
       }
 
-      // Mobile menu functionality
-      function initMobileMenu() {
-        const hamburger = document.querySelector(".hamburger");
-        const navMenu = document.querySelector(".nav-menu");
-
-        if (hamburger && navMenu) {
-          hamburger.addEventListener("click", function () {
-            const isVisible = navMenu.style.display === "flex";
-
-            if (isVisible) {
-              navMenu.style.display = "none";
-              hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-            } else {
-              navMenu.style.display = "flex";
-              hamburger.innerHTML = '<i class="fas fa-times"></i>';
-            }
-          });
-
-          // Close menu when clicking on nav links
-          const navLinks = document.querySelectorAll(".nav-link");
-          navLinks.forEach((link) => {
-            link.addEventListener("click", () => {
-              if (window.innerWidth <= 768) {
-                navMenu.style.display = "none";
-                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-              }
-            });
-          });
-        }
-      }
-
-      // Handle responsive behavior
-      function handleResize() {
-        const navMenu = document.querySelector(".nav-menu");
-        const hamburger = document.querySelector(".hamburger");
-
-        if (window.innerWidth > 768) {
-          if (navMenu) {
-            navMenu.style.display = "flex";
-            navMenu.style.position = "static";
-            navMenu.style.flexDirection = "row";
-            navMenu.style.background = "none";
-            navMenu.style.boxShadow = "none";
-            navMenu.style.padding = "0";
-          }
-          if (hamburger) {
-            hamburger.style.display = "none";
-          }
-        } else {
-          if (navMenu) {
-            navMenu.style.display = "none";
-          }
-          if (hamburger) {
-            hamburger.style.display = "block";
-          }
-        }
-      }
-
+      
       // Initialize everything when DOM is loaded
       document.addEventListener("DOMContentLoaded", function () {
         addScrollAnimation();
@@ -1967,60 +1913,104 @@
         typeWriter();
       });
 
-      // Mobile Navigation Toggle
+     // Complete Mobile Navigation System
 document.addEventListener('DOMContentLoaded', function() {
-    // Get the hamburger menu and nav menu elements
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    
-    // Add click event listener to hamburger menu
-    hamburger.addEventListener('click', function() {
-        // Toggle active class on nav menu
-        navMenu.classList.toggle('active');
-        
-        // Optional: Add rotation animation to hamburger icon
-        hamburger.classList.toggle('active');
-    });
-    
-    // Close menu when clicking on nav links (for better UX)
     const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-        });
-    });
-    
-    // Close menu when clicking outside of nav (optional)
-    document.addEventListener('click', function(e) {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
-    });
-});
 
-// Optional: Smooth scrolling for anchor links
-document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.nav-link[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar height
+    // Initialize mobile menu functionality
+    function initMobileMenu() {
+        if (hamburger && navMenu) {
+            // Toggle mobile menu
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                navMenu.classList.toggle('active');
+                hamburger.classList.toggle('active');
                 
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
+                // Change hamburger icon
+                const icon = hamburger.querySelector('i');
+                if (navMenu.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-bars';
+                }
+            });
+
+            // Close menu when clicking on nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        closeMenu();
+                    }
                 });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+        }
+    }
+
+    // Close mobile menu function
+    function closeMenu() {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+        const icon = hamburger.querySelector('i');
+        icon.className = 'fas fa-bars';
+    }
+
+    // Handle responsive behavior
+    function handleResize() {
+        if (window.innerWidth > 768) {
+            // Desktop view - reset menu
+            if (navMenu) {
+                navMenu.classList.remove('active');
             }
+            if (hamburger) {
+                hamburger.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.className = 'fas fa-bars';
+            }
+        }
+    }
+
+    // Smooth scrolling for anchor links
+    function initSmoothScrolling() {
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = href;
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - 80;
+                        
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
         });
-    });
+    }
+
+    // Initialize all functions
+    initMobileMenu();
+    initSmoothScrolling();
+    
+    // Handle window resize
+    window.addEventListener('resize', handleResize);
+    
+    // Initial resize check
+    handleResize();
 });
     </script>
   </body>
