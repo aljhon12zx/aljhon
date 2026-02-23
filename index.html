@@ -147,11 +147,9 @@
       .contact-item h4 { color: var(--text-primary); margin-bottom: 0.25rem; font-size: 0.9rem; }
       .contact-item p { color: var(--text-secondary); margin: 0; font-size: 0.85rem; word-break: break-word; }
 
-      /* ── IMAGE VIEWER MODAL ── */
+      /* IMAGE VIEWER MODAL */
       .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(12px); z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem; }
       .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
-
-      /* Certificate modal */
       .cert-modal-box { background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border-hover); max-width: 800px; width: 100%; box-shadow: 0 0 80px var(--accent-glow); animation: scaleIn 0.25s ease; max-height: 90vh; overflow-y: auto; }
       .modal-header { padding: 1.25rem 1.75rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg-card); z-index: 1; border-radius: 24px 24px 0 0; }
       .modal-header h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -307,6 +305,13 @@
       <div class="container">
         <div class="section-title"><h2>Work Experience</h2><p>Professional journey and career highlights</p></div>
         <div class="experience-grid">
+
+          <!-- NEW: IT Instructor -->
+          <div class="experience-item">
+            <div class="experience-header"><div class="experience-title"><h3>Full-time IT Instructor</h3><div class="experience-company">Zamboanga Del Sur Provincial Government College</div><div class="experience-location">Zamboanga del Sur, Philippines</div></div><div class="experience-year">2025 - 2026</div></div>
+            <div class="experience-description">Serving as a full-time IT instructor responsible for delivering quality education in information technology courses. Develops curriculum, facilitates hands-on laboratory sessions, mentors students in programming and technical skills, and contributes to the academic growth and development of the institution.</div>
+          </div>
+
           <div class="experience-item">
             <div class="experience-header"><div class="experience-title"><h3>Liaison Officer</h3><div class="experience-company">Rose Travel and Tours</div><div class="experience-location">Philippines</div></div><div class="experience-year">2023 - 2024</div></div>
             <div class="experience-description">Served as primary liaison between the company and various stakeholders including clients, government agencies, and partner organizations. Managed administrative processes, coordinated travel arrangements, and ensured smooth communication channels.</div>
@@ -530,7 +535,7 @@
     <script>
       emailjs.init("zzW2oUFbpP-JqoeS_");
 
-      // ── CERTIFICATE MODAL ──
+      // CERTIFICATE MODAL
       function openCertModal(src, title) {
         document.getElementById('certModalImg').src = src;
         document.getElementById('certModalTitle').textContent = title;
@@ -545,7 +550,7 @@
         if (e.target === this) closeCertModal();
       });
 
-      // ── PROJECT IMAGE VIEWER ──
+      // PROJECT IMAGE VIEWER
       let projImages = [];
       let projIndex = 0;
 
@@ -581,14 +586,9 @@
           img.src = projImages[projIndex];
           img.style.opacity = '1';
         }, 150);
-
         document.getElementById('projViewerCounter').textContent = (projIndex + 1) + ' / ' + projImages.length;
-
-        // nav buttons
         document.getElementById('projPrev').style.display = projImages.length > 1 ? 'flex' : 'none';
         document.getElementById('projNext').style.display = projImages.length > 1 ? 'flex' : 'none';
-
-        // dots
         document.querySelectorAll('.proj-dot').forEach((d, i) => d.classList.toggle('active', i === projIndex));
       }
 
@@ -603,7 +603,6 @@
         });
       }
 
-      // Keyboard navigation
       document.addEventListener('keydown', function(e) {
         if (document.getElementById('projViewer').classList.contains('open')) {
           if (e.key === 'ArrowLeft') changeSlide(-1);
@@ -615,13 +614,12 @@
         }
       });
 
-      // Click outside project viewer closes it
       document.getElementById('projViewer').addEventListener('click', function(e) {
         if (e.target === this) closeProjectViewer();
       });
 
-      // ── TYPING ANIMATION ──
-      const words = ["PROGRAMMER", "WEB DEVELOPER", "FULL STACK DEVELOPER"];
+      // TYPING ANIMATION
+      const words = ["PROGRAMMER", "WEB DEVELOPER", "FULL STACK DEVELOPER", "IT INSTRUCTOR"];
       let wIdx = 0, cIdx = 0, deleting = false;
       function typeWriter() {
         const el = document.getElementById('typed-text'), word = words[wIdx];
@@ -634,7 +632,7 @@
       }
       typeWriter();
 
-      // ── NAVBAR ──
+      // NAVBAR
       window.addEventListener('scroll', () => {
         document.querySelector('.navbar').style.boxShadow = window.scrollY > 50 ? '0 2px 30px rgba(0,0,0,0.5)' : 'none';
       });
@@ -658,12 +656,12 @@
         });
       });
 
-      // ── SKILL BARS ──
+      // SKILL BARS
       new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.progress-fill').forEach(b => b.style.width = b.dataset.width + '%'); });
       }, { threshold: 0.3 }).observe(document.querySelector('.skills-grid'));
 
-      // ── SCROLL ANIMATIONS ──
+      // SCROLL ANIMATIONS
       const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
       }, { threshold: 0.08 });
@@ -673,7 +671,7 @@
         obs.observe(el);
       });
 
-      // ── EMAIL FORM ──
+      // EMAIL FORM
       function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
       function showFormSuccess() { const s = document.getElementById('successMessage'); document.getElementById('errorMessage').style.display = 'none'; s.style.display = 'block'; setTimeout(() => s.style.display = 'none', 5000); }
       function showFormError(msg) { const e = document.getElementById('errorMessage'); document.getElementById('successMessage').style.display = 'none'; e.textContent = '❌ ' + msg; e.style.display = 'block'; setTimeout(() => e.style.display = 'none', 5000); }
@@ -691,11 +689,10 @@
           .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message'; });
       });
 
-      // ── PAGE LOAD ──
+      // PAGE LOAD
       document.body.style.opacity = '0';
       document.body.style.transition = 'opacity 0.5s ease';
       window.addEventListener('load', () => { document.body.style.opacity = '1'; });
     </script>
 </body>
 </html>
-
