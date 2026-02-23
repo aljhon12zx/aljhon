@@ -23,567 +23,170 @@
         --border-hover: rgba(124, 111, 247, 0.4);
         --gradient: linear-gradient(135deg, #7c6ff7 0%, #a78bfa 50%, #c084fc 100%);
       }
-
       * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      body {
-        font-family: 'DM Sans', sans-serif;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        overflow-x: hidden;
-        line-height: 1.6;
-      }
-
-      /* ── SCROLLBAR ── */
+      body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; }
       ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-primary); }
       ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-      /* ── NAVBAR ── */
-      .navbar {
-        position: fixed; top: 0; width: 100%;
-        background: rgba(13, 13, 15, 0.92);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-        z-index: 1000;
-        transition: all 0.3s ease;
-      }
-
-      .nav-container {
-        max-width: 1200px; margin: 0 auto;
-        padding: 1rem 2rem;
-        display: flex; justify-content: space-between; align-items: center;
-      }
-
-      .logo {
-        font-family: 'Syne', sans-serif;
-        font-size: 1.1rem; font-weight: 800;
-        background: var(--gradient);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
+      .navbar { position: fixed; top: 0; width: 100%; background: rgba(13,13,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 1000; transition: all 0.3s; }
+      .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+      .logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
       .nav-menu { display: flex; list-style: none; gap: 1.5rem; }
-
-      .nav-link {
-        text-decoration: none; color: var(--text-secondary);
-        font-weight: 500; font-size: 0.88rem;
-        transition: color 0.3s; position: relative;
-      }
-
+      .nav-link { text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 0.88rem; transition: color 0.3s; position: relative; }
       .nav-link:hover { color: var(--accent-2); }
-
-      .nav-link::after {
-        content: ''; position: absolute;
-        width: 0; height: 2px; bottom: -4px; left: 0;
-        background: var(--gradient); transition: width 0.3s;
-        border-radius: 2px;
-      }
-
+      .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--gradient); transition: width 0.3s; border-radius: 2px; }
       .nav-link:hover::after { width: 100%; }
-
       .hamburger { display: none; cursor: pointer; font-size: 1.4rem; color: var(--accent-2); }
 
-      /* ── HERO ── */
-      .hero {
-        min-height: 100vh; display: flex; align-items: center;
-        background: var(--bg-primary);
-        position: relative; overflow: hidden; padding-top: 80px;
-      }
-
-      .hero::before {
-        content: ''; position: absolute;
-        top: -30%; left: -20%; width: 60%; height: 80%;
-        background: radial-gradient(ellipse, rgba(124,111,247,0.12) 0%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .hero::after {
-        content: ''; position: absolute;
-        bottom: -20%; right: -10%; width: 50%; height: 70%;
-        background: radial-gradient(ellipse, rgba(192,132,252,0.08) 0%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .hero-content {
-        max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-        display: grid; grid-template-columns: 1fr 1fr;
-        gap: 4rem; align-items: center; position: relative; z-index: 2;
-      }
-
-      .hero-text h1 {
-        font-family: 'Syne', sans-serif;
-        font-size: 3.5rem; font-weight: 800;
-        margin-bottom: 1rem; line-height: 1.1;
-        opacity: 0; animation: slideInLeft 1s ease 0.2s forwards;
-      }
-
-      .subtitle {
-        font-size: 1.1rem; color: var(--text-secondary);
-        margin-bottom: 1.5rem;
-        opacity: 0; animation: slideInLeft 1s ease 0.4s forwards;
-      }
-
-      .typed-text {
-        font-family: 'Syne', sans-serif;
-        font-size: 1.8rem; font-weight: 700;
-        margin-bottom: 2rem; min-height: 2.5rem;
-        background: var(--gradient);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-        opacity: 0; animation: slideInLeft 1s ease 0.6s forwards;
-      }
-
-      .typed-text::after {
-        content: '|'; -webkit-text-fill-color: var(--accent-2);
-        animation: blink 1s infinite;
-      }
-
-      .hero-buttons {
-        display: flex; gap: 1rem; flex-wrap: wrap;
-        opacity: 0; animation: slideInLeft 1s ease 0.8s forwards;
-      }
-
-      .btn {
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        padding: 0.85rem 1.8rem; text-decoration: none;
-        border-radius: 50px; font-weight: 600; font-size: 0.95rem;
-        transition: all 0.3s ease; border: 2px solid transparent;
-        cursor: pointer; white-space: nowrap;
-      }
-
-      .btn-primary {
-        background: var(--gradient); color: #fff;
-        border-color: transparent;
-        box-shadow: 0 0 20px var(--accent-glow);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0 35px rgba(124,111,247,0.5);
-      }
-
-      .btn-outline {
-        background: transparent; color: var(--accent-2);
-        border-color: var(--border-hover);
-      }
-
-      .btn-outline:hover {
-        background: var(--accent-glow); transform: translateY(-2px);
-      }
-
-      .hero-image {
-        display: flex; justify-content: center;
-        opacity: 0; animation: slideInRight 1s ease 0.4s forwards;
-      }
-
+      .hero { min-height: 100vh; display: flex; align-items: center; background: var(--bg-primary); position: relative; overflow: hidden; padding-top: 80px; }
+      .hero::before { content: ''; position: absolute; top: -30%; left: -20%; width: 60%; height: 80%; background: radial-gradient(ellipse, rgba(124,111,247,0.12) 0%, transparent 70%); pointer-events: none; }
+      .hero::after { content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 70%; background: radial-gradient(ellipse, rgba(192,132,252,0.08) 0%, transparent 70%); pointer-events: none; }
+      .hero-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
+      .hero-text h1 { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; opacity: 0; animation: slideInLeft 1s ease 0.2s forwards; }
+      .subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem; opacity: 0; animation: slideInLeft 1s ease 0.4s forwards; }
+      .typed-text { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; min-height: 2.5rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; animation: slideInLeft 1s ease 0.6s forwards; }
+      .typed-text::after { content: '|'; -webkit-text-fill-color: var(--accent-2); animation: blink 1s infinite; }
+      .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: slideInLeft 1s ease 0.8s forwards; }
+      .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.8rem; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s; border: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+      .btn-primary { background: var(--gradient); color: #fff; border-color: transparent; box-shadow: 0 0 20px var(--accent-glow); }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(124,111,247,0.5); }
+      .btn-outline { background: transparent; color: var(--accent-2); border-color: var(--border-hover); }
+      .btn-outline:hover { background: var(--accent-glow); transform: translateY(-2px); }
+      .hero-image { display: flex; justify-content: center; opacity: 0; animation: slideInRight 1s ease 0.4s forwards; }
       .floating { animation: float 3s ease-in-out infinite; }
+      .profile-img { width: 300px; height: 300px; border-radius: 50%; border: 3px solid var(--border-hover); object-fit: cover; box-shadow: 0 0 60px var(--accent-glow); }
 
-      .profile-img {
-        width: 300px; height: 300px; border-radius: 50%;
-        border: 3px solid var(--border-hover);
-        object-fit: cover;
-        box-shadow: 0 0 60px var(--accent-glow);
-      }
-
-      /* ── SECTIONS ── */
       .section { padding: 5rem 0; }
       .section-alt { background: var(--bg-secondary); }
-
       .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
       .section-title { text-align: center; margin-bottom: 3rem; }
-
-      .section-title h2 {
-        font-family: 'Syne', sans-serif;
-        font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem;
-        background: var(--gradient);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
+      .section-title h2 { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
       .section-title p { color: var(--text-secondary); font-size: 1rem; }
 
-      /* ── ABOUT ── */
       .about-content { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center; }
-
-      .about-img {
-        width: 100%; border-radius: 20px;
-        box-shadow: 0 0 50px var(--accent-glow);
-        border: 1px solid var(--border); object-fit: cover;
-      }
-
-      .about-text h3 {
-        font-family: 'Syne', sans-serif;
-        font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem;
-        background: var(--gradient);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
+      .about-img { width: 100%; border-radius: 20px; box-shadow: 0 0 50px var(--accent-glow); border: 1px solid var(--border); object-fit: cover; }
+      .about-text h3 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
       .about-text p { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.8; }
-
       .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-
-      .info-item {
-        display: flex; align-items: flex-start; gap: 0.75rem;
-        padding: 0.5rem; flex-wrap: wrap;
-      }
-
+      .info-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem; flex-wrap: wrap; }
       .info-item strong { color: var(--accent-2); min-width: 90px; flex-shrink: 0; font-size: 0.9rem; }
       .info-item span { color: var(--text-secondary); font-size: 0.9rem; }
 
-      /* ── CARDS (Education / Experience) ── */
       .education-grid, .experience-grid { display: grid; gap: 1.5rem; max-width: 900px; margin: 0 auto; }
-
-      .education-item, .experience-item {
-        background: var(--bg-card);
-        padding: 2rem; border-radius: 16px;
-        border: 1px solid var(--border);
-        border-left: 4px solid var(--accent);
-        transition: all 0.3s ease;
-      }
-
-      .education-item:hover, .experience-item:hover {
-        transform: translateY(-4px);
-        border-color: var(--border-hover);
-        box-shadow: 0 10px 40px var(--accent-glow);
-        background: var(--bg-card-hover);
-      }
-
-      .education-header, .experience-header {
-        display: flex; justify-content: space-between;
-        align-items: flex-start; margin-bottom: 1rem;
-        flex-wrap: wrap; gap: 0.75rem;
-      }
-
-      .education-title h3, .experience-title h3 {
-        font-family: 'Syne', sans-serif;
-        font-size: 1.2rem; font-weight: 700;
-        color: var(--accent-2); margin-bottom: 0.4rem;
-      }
-
+      .education-item, .experience-item { background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); border-left: 4px solid var(--accent); transition: all 0.3s; }
+      .education-item:hover, .experience-item:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 10px 40px var(--accent-glow); background: var(--bg-card-hover); }
+      .education-header, .experience-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
+      .education-title h3, .experience-title h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--accent-2); margin-bottom: 0.4rem; }
       .education-school, .experience-company { font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; font-size: 0.95rem; }
       .education-location, .experience-location { color: var(--text-muted); font-size: 0.85rem; }
-
-      .education-year, .experience-year {
-        background: var(--gradient); color: #fff;
-        padding: 0.4rem 1rem; border-radius: 20px;
-        font-weight: 600; font-size: 0.85rem; white-space: nowrap;
-        align-self: flex-start;
-      }
-
+      .education-year, .experience-year { background: var(--gradient); color: #fff; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; white-space: nowrap; align-self: flex-start; }
       .education-description, .experience-description { color: var(--text-secondary); line-height: 1.6; margin-top: 0.75rem; font-size: 0.95rem; }
 
-      /* ── SKILLS ── */
       .skills-grid { display: grid; gap: 1.25rem; max-width: 800px; margin: 0 auto; }
-
-      .skill-item {
-        background: var(--bg-card); padding: 1.5rem; border-radius: 14px;
-        border: 1px solid var(--border); transition: all 0.3s;
-      }
-
+      .skill-item { background: var(--bg-card); padding: 1.5rem; border-radius: 14px; border: 1px solid var(--border); transition: all 0.3s; }
       .skill-item:hover { border-color: var(--border-hover); box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-3px); }
-
       .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-
       .skill-name { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; color: var(--text-primary); }
-
       .skill-icon { font-size: 1.4rem; color: var(--accent-2); }
       .skill-percentage { font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
       .progress-bar { height: 8px; background: rgba(124,111,247,0.15); border-radius: 10px; overflow: hidden; }
       .progress-fill { height: 100%; background: var(--gradient); width: 0; transition: width 1.5s ease; border-radius: 10px; }
 
-      /* ── AWARDS ── */
       .awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; max-width: 1050px; margin: 0 auto; }
+      .award-item { background: var(--bg-card); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); text-align: center; transition: all 0.3s; position: relative; overflow: hidden; }
+      .award-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); }
+      .award-item:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 20px 50px var(--accent-glow); background: var(--bg-card-hover); }
+      .award-icon { width: 72px; height: 72px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: #fff; font-size: 1.8rem; box-shadow: 0 0 25px var(--accent-glow); }
+      .award-item h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
+      .award-issuer { color: var(--accent-2); font-weight: 600; margin-bottom: 0.3rem; font-size: 0.88rem; }
+      .award-year { color: var(--text-muted); font-size: 0.83rem; margin-bottom: 0.75rem; }
+      .award-description { color: var(--text-secondary); line-height: 1.6; font-size: 0.88rem; }
+      .certificate-link, .view-cert-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.5rem 1.1rem; background: var(--gradient); color: #fff; text-decoration: none; border-radius: 20px; font-size: 0.82rem; font-weight: 600; transition: all 0.3s; border: none; cursor: pointer; box-shadow: 0 0 15px var(--accent-glow); font-family: inherit; }
+      .certificate-link:hover, .view-cert-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(124,111,247,0.6); }
 
-      .award-item {
-        background: var(--bg-card); padding: 2rem; border-radius: 20px;
-        border: 1px solid var(--border);
-        text-align: center; transition: all 0.3s; position: relative; overflow: hidden;
-      }
-
-      .award-item::before {
-        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        background: var(--gradient);
-      }
-
-      .award-item:hover {
-        transform: translateY(-8px);
-        border-color: var(--border-hover);
-        box-shadow: 0 20px 50px var(--accent-glow);
-        background: var(--bg-card-hover);
-      }
-
-      .award-icon {
-        width: 72px; height: 72px; background: var(--gradient);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        margin: 0 auto 1.2rem; color: #fff; font-size: 1.8rem;
-        box-shadow: 0 0 25px var(--accent-glow);
-      }
-
-      .award-item h3 { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
-      .award-issuer { color: var(--accent-2); font-weight: 600; margin-bottom: 0.3rem; font-size: 0.9rem; }
-      .award-year { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem; }
-      .award-description { color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem; }
-
-      .certificate-link, .view-cert-btn {
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        margin-top: 1rem; padding: 0.5rem 1.1rem;
-        background: var(--gradient); color: #fff;
-        text-decoration: none; border-radius: 20px; font-size: 0.82rem;
-        font-weight: 600; transition: all 0.3s; border: none; cursor: pointer;
-        box-shadow: 0 0 15px var(--accent-glow);
-      }
-
-      .certificate-link:hover, .view-cert-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0 28px rgba(124,111,247,0.6);
-      }
-
-      /* ── PROJECTS ── */
       .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
-
-      .project-card {
-        background: var(--bg-card); border-radius: 20px;
-        border: 1px solid var(--border); overflow: hidden; transition: all 0.3s;
-      }
-
-      .project-card:hover {
-        transform: translateY(-8px);
-        border-color: var(--border-hover);
-        box-shadow: 0 20px 50px var(--accent-glow);
-        background: var(--bg-card-hover);
-      }
-
-      .project-image {
-        height: 200px; background: var(--gradient);
-        display: flex; align-items: center; justify-content: center;
-        color: white; font-size: 3rem; position: relative; overflow: hidden;
-      }
-
-      .project-image::before {
-        content: ''; position: absolute; inset: 0;
-        background: rgba(0,0,0,0.2);
-      }
-
+      .project-card { background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; transition: all 0.3s; }
+      .project-card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 20px 50px var(--accent-glow); background: var(--bg-card-hover); }
+      .project-image { height: 200px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; position: relative; overflow: hidden; }
+      .project-image::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.2); }
       .project-image i { position: relative; z-index: 1; }
 
-      /* Project uploaded images display */
-      .project-images-strip {
-        display: flex; gap: 4px; padding: 6px;
-        background: rgba(0,0,0,0.3); flex-wrap: wrap;
-        min-height: 0; transition: all 0.3s;
-      }
-
-      .project-images-strip:empty { display: none; }
-
-      .project-thumb {
-        width: calc(33.33% - 4px); aspect-ratio: 16/9;
-        object-fit: cover; border-radius: 6px;
-        cursor: pointer; transition: opacity 0.2s;
-        border: 1px solid var(--border);
-      }
-
-      .project-thumb:hover { opacity: 0.8; }
+      .project-images-strip { display: none; flex-wrap: wrap; gap: 4px; padding: 8px; background: rgba(0,0,0,0.4); border-top: 1px solid var(--border); }
+      .project-images-strip.has-images { display: flex; }
+      .project-thumb { width: calc(33.33% - 4px); aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; cursor: pointer; transition: opacity 0.2s; border: 1px solid var(--border); }
+      .project-thumb:hover { opacity: 0.75; }
 
       .project-content { padding: 1.75rem; }
-
       .project-content h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
       .project-type { color: var(--accent-2); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.9rem; }
       .project-description { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem; font-size: 0.93rem; }
-
       .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+      .tech-tag { background: rgba(124,111,247,0.12); color: var(--accent-2); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.78rem; font-weight: 500; border: 1px solid var(--border); }
+      .upload-project-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.2rem; background: transparent; color: var(--accent-2); border: 1.5px solid var(--border-hover); border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+      .upload-project-btn:hover { background: var(--accent-glow); transform: translateY(-1px); }
 
-      .tech-tag {
-        background: rgba(124,111,247,0.12); color: var(--accent-2);
-        padding: 0.25rem 0.75rem; border-radius: 12px;
-        font-size: 0.78rem; font-weight: 500; border: 1px solid var(--border);
-      }
-
-      .upload-project-btn {
-        display: inline-flex; align-items: center; gap: 0.5rem;
-        padding: 0.55rem 1.2rem;
-        background: transparent; color: var(--accent-2);
-        border: 1.5px solid var(--border-hover); border-radius: 20px;
-        font-size: 0.82rem; font-weight: 600; cursor: pointer;
-        transition: all 0.3s;
-      }
-
-      .upload-project-btn:hover {
-        background: var(--accent-glow); transform: translateY(-1px);
-      }
-
-      /* ── CONTACT ── */
       .contact-content { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
-
-      .contact-form {
-        background: var(--bg-card); padding: 2rem; border-radius: 20px;
-        border: 1px solid var(--border);
-      }
-
+      .contact-form { background: var(--bg-card); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); }
       .form-group { margin-bottom: 1.25rem; }
-
       .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-primary); font-size: 0.9rem; }
-
-      .form-control {
-        width: 100%; padding: 0.9rem 1rem;
-        background: var(--bg-secondary);
-        border: 1.5px solid var(--border);
-        border-radius: 10px; font-size: 0.95rem;
-        color: var(--text-primary); transition: all 0.3s; font-family: inherit;
-      }
-
+      .form-control { width: 100%; padding: 0.9rem 1rem; background: var(--bg-secondary); border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-primary); transition: all 0.3s; font-family: inherit; }
       .form-control:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
       .form-control::placeholder { color: var(--text-muted); }
-
       textarea.form-control { min-height: 120px; resize: vertical; }
-
       .success-message, .error-message { display: none; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; font-weight: 500; font-size: 0.9rem; }
       .success-message { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
       .error-message { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
-
       .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
-
-      .contact-item {
-        display: flex; align-items: center; gap: 1rem;
-        padding: 1.25rem; background: var(--bg-card);
-        border-radius: 14px; border: 1px solid var(--border);
-        transition: all 0.3s;
-      }
-
+      .contact-item { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border); transition: all 0.3s; }
       .contact-item:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 0 25px var(--accent-glow); }
-
-      .contact-icon {
-        width: 46px; height: 46px; background: var(--gradient);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        color: #fff; font-size: 1.1rem; flex-shrink: 0;
-        box-shadow: 0 0 15px var(--accent-glow);
-      }
-
+      .contact-icon { width: 46px; height: 46px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; box-shadow: 0 0 15px var(--accent-glow); }
       .contact-item h4 { color: var(--text-primary); margin-bottom: 0.25rem; font-size: 0.9rem; }
       .contact-item p { color: var(--text-secondary); margin: 0; font-size: 0.85rem; word-break: break-word; }
 
-      /* ── MODAL BASE ── */
-      .modal-overlay {
-        display: none; position: fixed; inset: 0;
-        background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-        z-index: 9999; align-items: center; justify-content: center;
-        padding: 1.5rem;
-      }
-
+      /* MODALS */
+      .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem; }
       .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
-
-      .modal-box {
-        background: var(--bg-card); border-radius: 24px;
-        border: 1px solid var(--border-hover);
-        max-width: 700px; width: 100%;
-        box-shadow: 0 0 80px var(--accent-glow);
-        animation: scaleIn 0.25s ease;
-        max-height: 90vh; overflow-y: auto;
-      }
-
-      .modal-header {
-        padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
-        display: flex; justify-content: space-between; align-items: center;
-      }
-
+      .modal-box { background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border-hover); max-width: 700px; width: 100%; box-shadow: 0 0 80px var(--accent-glow); animation: scaleIn 0.25s ease; max-height: 90vh; overflow-y: auto; }
+      .modal-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg-card); z-index: 1; border-radius: 24px 24px 0 0; }
       .modal-header h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-      .modal-close {
-        background: rgba(124,111,247,0.1); border: 1px solid var(--border);
-        color: var(--text-secondary); width: 36px; height: 36px;
-        border-radius: 50%; cursor: pointer; font-size: 1rem;
-        display: flex; align-items: center; justify-content: center;
-        transition: all 0.2s;
-      }
-
+      .modal-close { background: rgba(124,111,247,0.1); border: 1px solid var(--border); color: var(--text-secondary); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
       .modal-close:hover { background: rgba(239,68,68,0.2); color: #f87171; border-color: rgba(239,68,68,0.4); }
-
       .modal-body { padding: 2rem; }
-
-      /* ── CERTIFICATE MODAL ── */
       .cert-img-container { text-align: center; }
+      .cert-img-container img { max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 0 30px var(--accent-glow); }
 
-      .cert-img-container img {
-        max-width: 100%; border-radius: 12px;
-        border: 1px solid var(--border);
-        box-shadow: 0 0 30px var(--accent-glow);
-      }
-
-      /* ── PROJECT UPLOAD MODAL ── */
-      .upload-zone {
-        border: 2px dashed var(--border-hover); border-radius: 16px;
-        padding: 2.5rem; text-align: center; cursor: pointer;
-        transition: all 0.3s; position: relative; margin-bottom: 1.5rem;
-        background: rgba(124,111,247,0.04);
-      }
-
+      .upload-zone { border: 2px dashed var(--border-hover); border-radius: 16px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; margin-bottom: 1.5rem; background: rgba(124,111,247,0.04); }
       .upload-zone:hover { border-color: var(--accent); background: var(--accent-glow); }
       .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
       .upload-zone i { font-size: 2.5rem; color: var(--accent-2); margin-bottom: 1rem; display: block; }
       .upload-zone p { color: var(--text-secondary); font-size: 0.95rem; }
       .upload-zone span { color: var(--accent-2); font-weight: 600; }
 
-      .uploaded-previews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+      .upload-status { padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.88rem; font-weight: 500; display: none; }
+      .upload-status.uploading { background: rgba(124,111,247,0.1); color: var(--accent-2); border: 1px solid var(--border-hover); display: block; }
+      .upload-status.success { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); display: block; }
+      .upload-status.error { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.3); display: block; }
 
+      .uploaded-previews { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
       .preview-wrapper { position: relative; aspect-ratio: 16/9; }
-
       .preview-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); }
-
-      .remove-img {
-        position: absolute; top: 4px; right: 4px;
-        background: rgba(239,68,68,0.85); color: white;
-        border: none; border-radius: 50%; width: 22px; height: 22px;
-        font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-        transition: all 0.2s;
-      }
-
+      .remove-img { position: absolute; top: 4px; right: 4px; background: rgba(239,68,68,0.85); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
       .remove-img:hover { background: #ef4444; transform: scale(1.1); }
 
-      .modal-save-btn {
-        width: 100%; padding: 0.9rem; margin-top: 1.25rem;
-        background: var(--gradient); color: #fff;
-        border: none; border-radius: 12px; font-size: 1rem;
-        font-weight: 700; cursor: pointer; font-family: inherit;
-        transition: all 0.3s; box-shadow: 0 0 20px var(--accent-glow);
-      }
-
-      .modal-save-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(124,111,247,0.5); }
-
-      /* ── FULLSCREEN IMAGE VIEWER ── */
-      .img-viewer {
-        display: none; position: fixed; inset: 0;
-        background: rgba(0,0,0,0.95); z-index: 10000;
-        align-items: center; justify-content: center;
-        padding: 1.5rem;
-      }
-
+      .img-viewer { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; align-items: center; justify-content: center; padding: 1.5rem; }
       .img-viewer.open { display: flex; }
-
       .img-viewer img { max-width: 90vw; max-height: 90vh; border-radius: 12px; object-fit: contain; }
-
-      .img-viewer-close {
-        position: absolute; top: 1.5rem; right: 1.5rem;
-        background: rgba(124,111,247,0.2); border: 1px solid var(--border-hover);
-        color: white; width: 44px; height: 44px; border-radius: 50%;
-        cursor: pointer; font-size: 1.2rem;
-        display: flex; align-items: center; justify-content: center;
-        transition: all 0.2s;
-      }
-
+      .img-viewer-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(124,111,247,0.2); border: 1px solid var(--border-hover); color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
       .img-viewer-close:hover { background: rgba(239,68,68,0.3); }
 
-      /* ── ANIMATIONS ── */
       @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
       @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
-      @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+      @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+      @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
       @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
       @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-      /* ── MOBILE ── */
       @media (max-width: 768px) {
         .nav-container { padding: 1rem; }
         .nav-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-secondary); flex-direction: column; padding: 1rem; border-bottom: 1px solid var(--border); gap: 0.5rem; }
@@ -592,7 +195,7 @@
         .hero { padding-top: 100px; padding-bottom: 3rem; }
         .hero-content { grid-template-columns: 1fr; text-align: center; gap: 2rem; padding: 0 1rem; }
         .hero-text h1 { font-size: 2.4rem; }
-        .typed-text { font-size: 1.4rem; justify-content: center; }
+        .typed-text { font-size: 1.4rem; }
         .hero-buttons { justify-content: center; }
         .profile-img { width: 230px; height: 230px; }
         .about-content { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
@@ -603,20 +206,17 @@
         .education-header, .experience-header { flex-direction: column; }
         .section { padding: 3rem 0; }
         .container { padding: 0 1rem; }
-        .uploaded-previews { grid-template-columns: repeat(2, 1fr); }
+        .uploaded-previews { grid-template-columns: repeat(2,1fr); }
       }
-
       @media (max-width: 480px) {
         .hero-text h1 { font-size: 2rem; }
         .section-title h2 { font-size: 1.9rem; }
         .profile-img { width: 190px; height: 190px; }
-        .uploaded-previews { grid-template-columns: 1fr 1fr; }
       }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar">
       <div class="nav-container">
         <div class="logo">Aljhon Caangay <span style="background:none;-webkit-text-fill-color:var(--text-muted);font-weight:400;font-size:0.9rem;">Portfolio</span></div>
@@ -634,7 +234,6 @@
       </div>
     </nav>
 
-    <!-- Hero -->
     <section id="home" class="hero">
       <div class="hero-content">
         <div class="hero-text">
@@ -642,33 +241,19 @@
           <p class="subtitle">Passionate about creating digital solutions</p>
           <div class="typed-text" id="typed-text">PROGRAMMER</div>
           <div class="hero-buttons">
-            <a href="pdf/My_Resume.pdf" class="btn btn-primary" id="downloadBtn" download="Aljhon_Resume.pdf">
-              <i class="fas fa-download"></i> Download Resume
-            </a>
-            <a href="#contact" class="btn btn-outline">
-              <i class="fas fa-envelope"></i> Get In Touch
-            </a>
+            <a href="pdf/My_Resume.pdf" class="btn btn-primary" download="Aljhon_Resume.pdf"><i class="fas fa-download"></i> Download Resume</a>
+            <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Get In Touch</a>
           </div>
         </div>
-        <div class="hero-image">
-          <div class="floating">
-            <img src="img/aljhon2.jpg" alt="Profile" class="profile-img" />
-          </div>
-        </div>
+        <div class="hero-image"><div class="floating"><img src="img/aljhon2.jpg" alt="Profile" class="profile-img" /></div></div>
       </div>
     </section>
 
-    <!-- About -->
     <section id="about" class="section section-alt">
       <div class="container">
-        <div class="section-title">
-          <h2>About Me</h2>
-          <p>Learn more about my background, experience, and what drives me</p>
-        </div>
+        <div class="section-title"><h2>About Me</h2><p>Learn more about my background, experience, and what drives me</p></div>
         <div class="about-content">
-          <div>
-            <img src="img/aljhon2.jpg" alt="About Me" class="about-img" />
-          </div>
+          <div><img src="img/aljhon2.jpg" alt="About Me" class="about-img" /></div>
           <div class="about-text">
             <h3>Full Stack Developer</h3>
             <p>I am a dedicated and results-driven developer with a proven track record of creating innovative web solutions. With a keen understanding of both frontend and backend technologies, I excel in building scalable applications and delivering value-driven solutions that meet both client and business objectives.</p>
@@ -687,388 +272,147 @@
       </div>
     </section>
 
-    <!-- Education -->
     <section id="education" class="section">
       <div class="container">
-        <div class="section-title">
-          <h2>Educational Background</h2>
-          <p>My academic journey and qualifications</p>
-        </div>
+        <div class="section-title"><h2>Educational Background</h2><p>My academic journey and qualifications</p></div>
         <div class="education-grid">
-          <div class="education-item">
-            <div class="education-header">
-              <div class="education-title">
-                <h3>Bachelor's Degree</h3>
-                <div class="education-school">Zamboanga Del Sur Provincial Government College</div>
-                <div class="education-location">Zamboanga del Sur, Philippines</div>
-              </div>
-              <div class="education-year">2021 - 2025</div>
-            </div>
-            <div class="education-description">Currently pursuing bachelor's degree with focus on developing comprehensive knowledge and skills. Actively engaged in academic activities and maintaining strong academic performance throughout the program.</div>
-          </div>
-          <div class="education-item">
-            <div class="education-header">
-              <div class="education-title">
-                <h3>Senior High School Diploma</h3>
-                <div class="education-school">Westprime Horizon Institute INC.</div>
-                <div class="education-location">Philippines</div>
-              </div>
-              <div class="education-year">2017 - 2019</div>
-            </div>
-            <div class="education-description">Completed senior high school education with strong academic foundation. Developed critical thinking skills and prepared for higher education through comprehensive curriculum.</div>
-          </div>
-          <div class="education-item">
-            <div class="education-header">
-              <div class="education-title">
-                <h3>High School Diploma</h3>
-                <div class="education-school">Norberta Guillar Memorial National High School</div>
-                <div class="education-location">Philippines</div>
-              </div>
-              <div class="education-year">2012 - 2016</div>
-            </div>
-            <div class="education-description">Successfully completed secondary education with good academic standing. Participated in various school activities and developed foundational knowledge across multiple subjects.</div>
-          </div>
-          <div class="education-item">
-            <div class="education-header">
-              <div class="education-title">
-                <h3>Elementary Education</h3>
-                <div class="education-school">Nazareth Elementary School</div>
-                <div class="education-location">Philippines</div>
-              </div>
-              <div class="education-year">2005 - 2011</div>
-            </div>
-            <div class="education-description">Completed primary education with strong fundamentals in core subjects. Developed early learning skills and enthusiasm for academic achievement.</div>
-          </div>
+          <div class="education-item"><div class="education-header"><div class="education-title"><h3>Bachelor's Degree</h3><div class="education-school">Zamboanga Del Sur Provincial Government College</div><div class="education-location">Zamboanga del Sur, Philippines</div></div><div class="education-year">2021 - 2025</div></div><div class="education-description">Currently pursuing bachelor's degree with focus on developing comprehensive knowledge and skills. Actively engaged in academic activities and maintaining strong academic performance throughout the program.</div></div>
+          <div class="education-item"><div class="education-header"><div class="education-title"><h3>Senior High School Diploma</h3><div class="education-school">Westprime Horizon Institute INC.</div><div class="education-location">Philippines</div></div><div class="education-year">2017 - 2019</div></div><div class="education-description">Completed senior high school education with strong academic foundation. Developed critical thinking skills and prepared for higher education through comprehensive curriculum.</div></div>
+          <div class="education-item"><div class="education-header"><div class="education-title"><h3>High School Diploma</h3><div class="education-school">Norberta Guillar Memorial National High School</div><div class="education-location">Philippines</div></div><div class="education-year">2012 - 2016</div></div><div class="education-description">Successfully completed secondary education with good academic standing. Participated in various school activities and developed foundational knowledge across multiple subjects.</div></div>
+          <div class="education-item"><div class="education-header"><div class="education-title"><h3>Elementary Education</h3><div class="education-school">Nazareth Elementary School</div><div class="education-location">Philippines</div></div><div class="education-year">2005 - 2011</div></div><div class="education-description">Completed primary education with strong fundamentals in core subjects. Developed early learning skills and enthusiasm for academic achievement.</div></div>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
     <section id="experience" class="section section-alt">
       <div class="container">
-        <div class="section-title">
-          <h2>Work Experience</h2>
-          <p>Professional journey and career highlights</p>
-        </div>
+        <div class="section-title"><h2>Work Experience</h2><p>Professional journey and career highlights</p></div>
         <div class="experience-grid">
-          <div class="experience-item">
-            <div class="experience-header">
-              <div class="experience-title">
-                <h3>Liaison Officer</h3>
-                <div class="experience-company">Rose Travel and Tours</div>
-                <div class="experience-location">Philippines</div>
-              </div>
-              <div class="experience-year">2023 - 2024</div>
-            </div>
-            <div class="experience-description">Served as primary liaison between the company and various stakeholders including clients, government agencies, and partner organizations. Managed administrative processes, coordinated travel arrangements, and ensured smooth communication channels. Handled documentation, permit processing, and maintained strong professional relationships with key contacts.</div>
-          </div>
-          <div class="experience-item">
-            <div class="experience-header">
-              <div class="experience-title">
-                <h3>Sales Agent</h3>
-                <div class="experience-company">Clique Marketing Services (Globe BBSP)</div>
-                <div class="experience-location">Philippines</div>
-              </div>
-              <div class="experience-year">2020 - 2022</div>
-            </div>
-            <div class="experience-description">Responsible for promoting and selling Globe telecommunications products and services. Achieved sales targets through effective customer engagement and product knowledge. Provided excellent customer service, handled inquiries, and maintained client relationships. Developed strong communication and negotiation skills while working in a fast-paced sales environment.</div>
-          </div>
+          <div class="experience-item"><div class="experience-header"><div class="experience-title"><h3>Liaison Officer</h3><div class="experience-company">Rose Travel and Tours</div><div class="experience-location">Philippines</div></div><div class="experience-year">2023 - 2024</div></div><div class="experience-description">Served as primary liaison between the company and various stakeholders including clients, government agencies, and partner organizations. Managed administrative processes, coordinated travel arrangements, and ensured smooth communication channels.</div></div>
+          <div class="experience-item"><div class="experience-header"><div class="experience-title"><h3>Sales Agent</h3><div class="experience-company">Clique Marketing Services (Globe BBSP)</div><div class="experience-location">Philippines</div></div><div class="experience-year">2020 - 2022</div></div><div class="experience-description">Responsible for promoting and selling Globe telecommunications products and services. Achieved sales targets through effective customer engagement and product knowledge. Provided excellent customer service, handled inquiries, and maintained client relationships.</div></div>
         </div>
       </div>
     </section>
 
-    <!-- Skills -->
     <section id="skills" class="section">
       <div class="container">
-        <div class="section-title">
-          <h2>My Skills</h2>
-          <p>Technologies and tools I work with to bring ideas to life</p>
-        </div>
+        <div class="section-title"><h2>My Skills</h2><p>Technologies and tools I work with to bring ideas to life</p></div>
         <div class="skills-grid">
-          <div class="skill-item">
-            <div class="skill-header">
-              <div class="skill-name"><i class="fab fa-html5 skill-icon"></i>HTML</div>
-              <div class="skill-percentage">85%</div>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-header">
-              <div class="skill-name"><i class="fab fa-css3-alt skill-icon"></i>CSS</div>
-              <div class="skill-percentage">80%</div>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-header">
-              <div class="skill-name"><i class="fab fa-js-square skill-icon"></i>JavaScript</div>
-              <div class="skill-percentage">75%</div>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" data-width="75"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-header">
-              <div class="skill-name"><i class="fab fa-php skill-icon"></i>PHP</div>
-              <div class="skill-percentage">70%</div>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" data-width="70"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-header">
-              <div class="skill-name"><i class="fas fa-database skill-icon"></i>MySQL</div>
-              <div class="skill-percentage">78%</div>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" data-width="78"></div></div>
-          </div>
+          <div class="skill-item"><div class="skill-header"><div class="skill-name"><i class="fab fa-html5 skill-icon"></i>HTML</div><div class="skill-percentage">85%</div></div><div class="progress-bar"><div class="progress-fill" data-width="85"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><div class="skill-name"><i class="fab fa-css3-alt skill-icon"></i>CSS</div><div class="skill-percentage">80%</div></div><div class="progress-bar"><div class="progress-fill" data-width="80"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><div class="skill-name"><i class="fab fa-js-square skill-icon"></i>JavaScript</div><div class="skill-percentage">75%</div></div><div class="progress-bar"><div class="progress-fill" data-width="75"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><div class="skill-name"><i class="fab fa-php skill-icon"></i>PHP</div><div class="skill-percentage">70%</div></div><div class="progress-bar"><div class="progress-fill" data-width="70"></div></div></div>
+          <div class="skill-item"><div class="skill-header"><div class="skill-name"><i class="fas fa-database skill-icon"></i>MySQL</div><div class="skill-percentage">78%</div></div><div class="progress-bar"><div class="progress-fill" data-width="78"></div></div></div>
         </div>
       </div>
     </section>
 
-    <!-- Awards & Certificates -->
     <section id="awards" class="section section-alt">
       <div class="container">
-        <div class="section-title">
-          <h2>Certificates & Awards</h2>
-          <p>Recognition and certifications that showcase my expertise</p>
-        </div>
+        <div class="section-title"><h2>Certificates & Awards</h2><p>Recognition and certifications that showcase my expertise</p></div>
         <div class="awards-grid">
-
-          <!-- Best In Computer Programming -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-trophy"></i></div>
-            <h3>Best In Computer Programming</h3>
-            <div class="award-issuer">Academic Institution</div>
-            <div class="award-year">July 2025</div>
-            <div class="award-description">Recognized for exceptional programming skills and outstanding performance in computer programming coursework and projects.</div>
-            <button class="view-cert-btn" onclick="openCertModal('img/certificate 1.png', 'Best In Computer Programming')">
-              <i class="fas fa-image"></i> View Certificate
-            </button>
-          </div>
-
-          <!-- Snowflake Data Engineering -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-database"></i></div>
-            <h3>Snowflake Data Engineering Essentials</h3>
-            <div class="award-issuer">Snowflake</div>
-            <div class="award-year">December 2024</div>
-            <div class="award-description">Successfully demonstrated ability to convert timezones, map locations via IP addresses, create tasks and merge statements, and work with stream functionality.</div>
-            <a href="https://achieve.snowflake.com/b7792517-f25b-49c9-b507-2205d5716798" class="certificate-link" target="_blank" rel="noopener noreferrer">
-              <i class="fas fa-external-link-alt"></i>View Certificate
-            </a>
-          </div>
-
-          <!-- Snowflake Data Lake -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-cloud"></i></div>
-            <h3>Snowflake Data Lake Essentials</h3>
-            <div class="award-issuer">Snowflake</div>
-            <div class="award-year">December 2024</div>
-            <div class="award-description">Certified in creating and editing STAGE objects, querying GeoSpatial data, working with external tables, materialized views, and Parquet data.</div>
-            <a href="https://achieve.snowflake.com/1e8118e5-b638-46c9-b775-db97fd4a66a5" class="certificate-link" target="_blank" rel="noopener noreferrer">
-              <i class="fas fa-external-link-alt"></i>View Certificate
-            </a>
-          </div>
-
-          <!-- Snowflake Data Warehouse -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-warehouse"></i></div>
-            <h3>Snowflake Data Warehouse Essentials</h3>
-            <div class="award-issuer">Snowflake</div>
-            <div class="award-year">October 2024</div>
-            <div class="award-description">Hands-on certification demonstrating proficiency in creating tables and file formats, compute resources, copy into statements, and transforming CSV and JSON data.</div>
-            <a href="https://achieve.snowflake.com/035477d2-5841-4e60-8516-f5d0f5863e2c" class="certificate-link" target="_blank" rel="noopener noreferrer">
-              <i class="fas fa-external-link-alt"></i>View Certificate
-            </a>
-          </div>
-
-          <!-- 8th International Online Conference -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-globe"></i></div>
-            <h3>8th International Online Conference 2024</h3>
-            <div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div>
-            <div class="award-year">November 2024</div>
-            <div class="award-description">Certificate of Participation in Contemporary Studies in Management (CoSiM) conference focusing on current management practices and innovations.</div>
-            <button class="view-cert-btn" onclick="openCertModal('img/certificate 3.png', '8th International Online Conference 2024')">
-              <i class="fas fa-image"></i> View Certificate
-            </button>
-          </div>
-
-          <!-- Balancing Innovation and Ethics in AI -->
-          <div class="award-item">
-            <div class="award-icon"><i class="fas fa-robot"></i></div>
-            <h3>Balancing Innovation and Ethics in AI</h3>
-            <div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div>
-            <div class="award-year">August 2024</div>
-            <div class="award-description">Participated in webinar on "Managing Risks and Ensuring Responsible AI Use in Education" during Silliman University's 123rd Founders Day celebration.</div>
-            <button class="view-cert-btn" onclick="openCertModal('img/certificate 2.png', 'Balancing Innovation and Ethics in AI')">
-              <i class="fas fa-image"></i> View Certificate
-            </button>
-          </div>
-
+          <div class="award-item"><div class="award-icon"><i class="fas fa-trophy"></i></div><h3>Best In Computer Programming</h3><div class="award-issuer">Academic Institution</div><div class="award-year">July 2025</div><div class="award-description">Recognized for exceptional programming skills and outstanding performance in computer programming coursework and projects.</div><button class="view-cert-btn" onclick="openCertModal('img/certificate 1.png','Best In Computer Programming')"><i class="fas fa-image"></i> View Certificate</button></div>
+          <div class="award-item"><div class="award-icon"><i class="fas fa-database"></i></div><h3>Snowflake Data Engineering Essentials</h3><div class="award-issuer">Snowflake</div><div class="award-year">December 2024</div><div class="award-description">Successfully demonstrated ability to convert timezones, map locations via IP addresses, create tasks and merge statements, and work with stream functionality.</div><a href="https://achieve.snowflake.com/b7792517-f25b-49c9-b507-2205d5716798" class="certificate-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>View Certificate</a></div>
+          <div class="award-item"><div class="award-icon"><i class="fas fa-cloud"></i></div><h3>Snowflake Data Lake Essentials</h3><div class="award-issuer">Snowflake</div><div class="award-year">December 2024</div><div class="award-description">Certified in creating and editing STAGE objects, querying GeoSpatial data, working with external tables, materialized views, and Parquet data.</div><a href="https://achieve.snowflake.com/1e8118e5-b638-46c9-b775-db97fd4a66a5" class="certificate-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>View Certificate</a></div>
+          <div class="award-item"><div class="award-icon"><i class="fas fa-warehouse"></i></div><h3>Snowflake Data Warehouse Essentials</h3><div class="award-issuer">Snowflake</div><div class="award-year">October 2024</div><div class="award-description">Hands-on certification demonstrating proficiency in creating tables and file formats, compute resources, copy into statements, and transforming CSV and JSON data.</div><a href="https://achieve.snowflake.com/035477d2-5841-4e60-8516-f5d0f5863e2c" class="certificate-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>View Certificate</a></div>
+          <div class="award-item"><div class="award-icon"><i class="fas fa-globe"></i></div><h3>8th International Online Conference 2024</h3><div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div><div class="award-year">November 2024</div><div class="award-description">Certificate of Participation in Contemporary Studies in Management (CoSiM) conference focusing on current management practices and innovations.</div><button class="view-cert-btn" onclick="openCertModal('img/certificate 3.png','8th International Online Conference 2024')"><i class="fas fa-image"></i> View Certificate</button></div>
+          <div class="award-item"><div class="award-icon"><i class="fas fa-robot"></i></div><h3>Balancing Innovation and Ethics in AI</h3><div class="award-issuer">Silliman University - Dr. Mariano C. Lao Global Studies Center</div><div class="award-year">August 2024</div><div class="award-description">Participated in webinar on "Managing Risks and Ensuring Responsible AI Use in Education" during Silliman University's 123rd Founders Day celebration.</div><button class="view-cert-btn" onclick="openCertModal('img/certificate 2.png','Balancing Innovation and Ethics in AI')"><i class="fas fa-image"></i> View Certificate</button></div>
         </div>
       </div>
     </section>
 
-    <!-- Projects -->
     <section id="projects" class="section">
       <div class="container">
-        <div class="section-title">
-          <h2>My Projects & Systems</h2>
-          <p>Showcase of applications and systems I've developed</p>
-        </div>
+        <div class="section-title"><h2>My Projects & Systems</h2><p>Showcase of applications and systems I've developed</p></div>
         <div class="projects-grid">
-
-          <!-- Project 1 -->
-          <div class="project-card" id="project-card-0">
+          <div class="project-card">
             <div class="project-image"><i class="fas fa-bus"></i></div>
             <div class="project-images-strip" id="strip-0"></div>
             <div class="project-content">
               <h3>Bus Tracking System Using GPS with Data Analytics</h3>
               <div class="project-type">Transportation Management System</div>
               <div class="project-description">Real-time bus tracking system with GPS integration and comprehensive data analytics. Features live location monitoring, route optimization, passenger analytics, and performance reporting for efficient fleet management.</div>
-              <div class="project-tech">
-                <span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">OSRM</span>
-                <span class="tech-tag">Leaflet Maps</span><span class="tech-tag">Chart.js</span><span class="tech-tag">JavaScript</span>
-              </div>
-              <button class="upload-project-btn" onclick="openUploadModal(0)">
-                <i class="fas fa-images"></i> Add Project Images
-              </button>
+              <div class="project-tech"><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">OSRM</span><span class="tech-tag">Leaflet Maps</span><span class="tech-tag">Chart.js</span><span class="tech-tag">JavaScript</span></div>
+              <button class="upload-project-btn" onclick="openUploadModal(0)"><i class="fas fa-images"></i> Add Project Images</button>
             </div>
           </div>
-
-          <!-- Project 2 -->
-          <div class="project-card" id="project-card-1">
+          <div class="project-card">
             <div class="project-image"><i class="fas fa-hospital-alt"></i></div>
             <div class="project-images-strip" id="strip-1"></div>
             <div class="project-content">
               <h3>Zamboanga del Sur Medical Center - Inventory Management & Monitoring System</h3>
               <div class="project-type">Healthcare Management System</div>
               <div class="project-description">Comprehensive inventory management system for medical supplies and equipment. Features real-time monitoring, automated alerts for low stock, expiration tracking, procurement management, and detailed reporting for efficient hospital operations.</div>
-              <div class="project-tech">
-                <span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Bootstrap</span><span class="tech-tag">AJAX</span><span class="tech-tag">Chart.js</span>
-              </div>
-              <button class="upload-project-btn" onclick="openUploadModal(1)">
-                <i class="fas fa-images"></i> Add Project Images
-              </button>
+              <div class="project-tech"><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Bootstrap</span><span class="tech-tag">AJAX</span><span class="tech-tag">Chart.js</span></div>
+              <button class="upload-project-btn" onclick="openUploadModal(1)"><i class="fas fa-images"></i> Add Project Images</button>
             </div>
           </div>
-
-          <!-- Project 3 -->
-          <div class="project-card" id="project-card-2">
+          <div class="project-card">
             <div class="project-image"><i class="fas fa-church"></i></div>
             <div class="project-images-strip" id="strip-2"></div>
             <div class="project-content">
               <h3>Church The Body of Christ Napolan Chapel - Baptism Online Appointment</h3>
               <div class="project-type">Religious Management System</div>
               <div class="project-description">Online baptism appointment system for church members. Features appointment scheduling, member registration, document management, notification system, and administrative dashboard for streamlined church operations and better member services.</div>
-              <div class="project-tech">
-                <span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">HTML5</span>
-                <span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Bootstrap</span>
-              </div>
-              <button class="upload-project-btn" onclick="openUploadModal(2)">
-                <i class="fas fa-images"></i> Add Project Images
-              </button>
+              <div class="project-tech"><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Bootstrap</span></div>
+              <button class="upload-project-btn" onclick="openUploadModal(2)"><i class="fas fa-images"></i> Add Project Images</button>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact" class="section section-alt">
       <div class="container">
-        <div class="section-title">
-          <h2>Get In Touch</h2>
-          <p>Let's discuss your project or just say hello!</p>
-        </div>
+        <div class="section-title"><h2>Get In Touch</h2><p>Let's discuss your project or just say hello!</p></div>
         <div class="contact-content">
           <div class="contact-form">
             <div class="success-message" id="successMessage">🎉 Thank you! Your message has been sent successfully. I'll get back to you soon!</div>
             <div class="error-message" id="errorMessage">❌ Please fill in all required fields.</div>
             <form id="contactForm">
-              <div class="form-group">
-                <label for="name">Name *</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required />
-              </div>
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required />
-              </div>
-              <div class="form-group">
-                <label for="subject">Subject *</label>
-                <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" required />
-              </div>
-              <div class="form-group">
-                <label for="message">Message *</label>
-                <textarea id="message" name="message" class="form-control" placeholder="Your message..." required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;" id="submitBtn">
-                <i class="fas fa-paper-plane"></i> Send Message
-              </button>
+              <div class="form-group"><label>Name *</label><input type="text" id="name" class="form-control" placeholder="Your name" required /></div>
+              <div class="form-group"><label>Email *</label><input type="email" id="email" class="form-control" placeholder="your@email.com" required /></div>
+              <div class="form-group"><label>Subject *</label><input type="text" id="subject" class="form-control" placeholder="Subject" required /></div>
+              <div class="form-group"><label>Message *</label><textarea id="message" class="form-control" placeholder="Your message..." required></textarea></div>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;" id="submitBtn"><i class="fas fa-paper-plane"></i> Send Message</button>
             </form>
           </div>
           <div class="contact-info">
-            <div class="contact-item">
-              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-              <div><h4>Email</h4><p>aljhoncaangay@gmail.com</p></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon"><i class="fas fa-phone"></i></div>
-              <div><h4>Phone</h4><p>+63 905 7466 197</p></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-              <div><h4>Location</h4><p>Philippines</p></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon"><i class="fab fa-facebook"></i></div>
-              <div><h4>Facebook</h4><p>Aljhon Caangay</p></div>
-            </div>
+            <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><p>aljhoncaangay@gmail.com</p></div></div>
+            <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><p>+63 905 7466 197</p></div></div>
+            <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Location</h4><p>Philippines</p></div></div>
+            <div class="contact-item"><div class="contact-icon"><i class="fab fa-facebook"></i></div><div><h4>Facebook</h4><p>Aljhon Caangay</p></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── CERTIFICATE MODAL ── -->
+    <!-- Certificate Modal -->
     <div class="modal-overlay" id="certModal">
       <div class="modal-box" style="max-width:800px;">
-        <div class="modal-header">
-          <h3 id="certModalTitle">Certificate</h3>
-          <button class="modal-close" onclick="closeCertModal()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-          <div class="cert-img-container">
-            <img id="certModalImg" src="" alt="Certificate" />
-          </div>
-        </div>
+        <div class="modal-header"><h3 id="certModalTitle">Certificate</h3><button class="modal-close" onclick="closeCertModal()"><i class="fas fa-times"></i></button></div>
+        <div class="modal-body"><div class="cert-img-container"><img id="certModalImg" src="" alt="Certificate" /></div></div>
       </div>
     </div>
 
-    <!-- ── PROJECT UPLOAD MODAL ── -->
+    <!-- Upload Modal -->
     <div class="modal-overlay" id="uploadModal">
       <div class="modal-box">
-        <div class="modal-header">
-          <h3 id="uploadModalTitle">Add Project Images</h3>
-          <button class="modal-close" onclick="closeUploadModal()"><i class="fas fa-times"></i></button>
-        </div>
+        <div class="modal-header"><h3 id="uploadModalTitle">Add Project Images</h3><button class="modal-close" onclick="closeUploadModal()"><i class="fas fa-times"></i></button></div>
         <div class="modal-body">
-          <div class="upload-zone" id="uploadZone">
+          <div class="upload-zone">
             <input type="file" id="fileInput" accept="image/*" multiple onchange="handleFileSelect(event)" />
             <i class="fas fa-cloud-upload-alt"></i>
             <p><span>Click to upload</span> or drag & drop images here</p>
-            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">PNG, JPG, GIF — multiple files supported</p>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">PNG, JPG, GIF, WEBP — up to 5MB each</p>
           </div>
+          <div class="upload-status" id="uploadStatus"></div>
           <div class="uploaded-previews" id="uploadedPreviews"></div>
-          <button class="modal-save-btn" onclick="saveProjectImages()">
-            <i class="fas fa-save"></i> Save Images to Project
-          </button>
         </div>
       </div>
     </div>
 
-    <!-- ── FULLSCREEN IMAGE VIEWER ── -->
+    <!-- Fullscreen Viewer -->
     <div class="img-viewer" id="imgViewer">
       <button class="img-viewer-close" onclick="closeViewer()"><i class="fas fa-times"></i></button>
       <img id="viewerImg" src="" alt="Full view" />
@@ -1077,254 +421,197 @@
     <script>
       emailjs.init("zzW2oUFbpP-JqoeS_");
 
-      // ── PROJECT IMAGES STORAGE ──
-      const projectImages = { 0: [], 1: [], 2: [] };
-      let currentProjectId = null;
-      let tempImages = [];
-
       // ── CERTIFICATE MODAL ──
-      function openCertModal(imgSrc, title) {
-        document.getElementById('certModalImg').src = imgSrc;
+      function openCertModal(src, title) {
+        document.getElementById('certModalImg').src = src;
         document.getElementById('certModalTitle').textContent = title;
         document.getElementById('certModal').classList.add('open');
         document.body.style.overflow = 'hidden';
       }
-
       function closeCertModal() {
         document.getElementById('certModal').classList.remove('open');
         document.body.style.overflow = '';
       }
 
-      // ── UPLOAD MODAL ──
+      // ── UPLOAD MODAL (PHP backend) ──
+      let currentProjectId = null;
+      const projectTitles = ['Bus Tracking System','Medical Center Inventory System','Church Baptism Appointment System'];
+
       function openUploadModal(projectId) {
         currentProjectId = projectId;
-        const titles = [
-          'Bus Tracking System',
-          'Medical Center Inventory System',
-          'Church Baptism Appointment System'
-        ];
-        document.getElementById('uploadModalTitle').textContent = 'Add Images — ' + titles[projectId];
-        tempImages = [...projectImages[projectId]];
-        renderPreviews();
+        document.getElementById('uploadModalTitle').textContent = 'Add Images — ' + projectTitles[projectId];
+        document.getElementById('uploadedPreviews').innerHTML = '';
+        document.getElementById('fileInput').value = '';
+        setUploadStatus('','');
+        loadExistingImages(projectId);
         document.getElementById('uploadModal').classList.add('open');
         document.body.style.overflow = 'hidden';
       }
-
       function closeUploadModal() {
         document.getElementById('uploadModal').classList.remove('open');
         document.body.style.overflow = '';
-        tempImages = [];
-        document.getElementById('fileInput').value = '';
+      }
+      function setUploadStatus(type, msg) {
+        const el = document.getElementById('uploadStatus');
+        el.className = 'upload-status' + (type ? ' ' + type : '');
+        el.textContent = msg;
+      }
+
+      function loadExistingImages(projectId) {
+        fetch('get_images.php')
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && data.projects[projectId]) {
+              const container = document.getElementById('uploadedPreviews');
+              container.innerHTML = '';
+              data.projects[projectId].forEach(filePath => addPreview(filePath));
+            }
+          }).catch(() => {});
       }
 
       function handleFileSelect(event) {
         const files = Array.from(event.target.files);
-        files.forEach(file => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            tempImages.push(e.target.result);
-            renderPreviews();
-          };
-          reader.readAsDataURL(file);
-        });
-        event.target.value = '';
+        if (!files.length) return;
+        setUploadStatus('uploading', '⏳ Uploading ' + files.length + ' file(s)...');
+        const formData = new FormData();
+        formData.append('project_id', currentProjectId);
+        files.forEach(file => formData.append('images[]', file));
+        fetch('upload.php', { method: 'POST', body: formData })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) {
+              setUploadStatus('success', '✅ ' + data.message);
+              data.files.forEach(filePath => addPreview(filePath));
+              refreshProjectStrip(currentProjectId);
+            } else {
+              setUploadStatus('error', '❌ ' + (data.errors ? data.errors.join(', ') : data.message));
+            }
+          })
+          .catch(() => setUploadStatus('error', '❌ Upload failed. Make sure XAMPP / PHP is running.'))
+          .finally(() => { event.target.value = ''; setTimeout(() => setUploadStatus('',''), 4000); });
       }
 
-      function renderPreviews() {
+      function addPreview(filePath) {
         const container = document.getElementById('uploadedPreviews');
-        container.innerHTML = '';
-        tempImages.forEach((src, index) => {
-          const wrap = document.createElement('div');
-          wrap.className = 'preview-wrapper';
-          wrap.innerHTML = `
-            <img src="${src}" alt="Preview ${index+1}" />
-            <button class="remove-img" onclick="removeTempImage(${index})"><i class="fas fa-times"></i></button>
-          `;
-          container.appendChild(wrap);
-        });
+        const wrap = document.createElement('div');
+        wrap.className = 'preview-wrapper';
+        wrap.dataset.file = filePath;
+        wrap.innerHTML = `<img src="${filePath}" alt="Preview" /><button class="remove-img" onclick="deleteImage('${filePath}',this.closest('.preview-wrapper'))"><i class="fas fa-times"></i></button>`;
+        container.appendChild(wrap);
       }
 
-      function removeTempImage(index) {
-        tempImages.splice(index, 1);
-        renderPreviews();
+      function deleteImage(filePath, wrapEl) {
+        const formData = new FormData();
+        formData.append('file', filePath);
+        fetch('delete_image.php', { method: 'POST', body: formData })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) { wrapEl.remove(); refreshProjectStrip(currentProjectId); }
+            else alert('Could not delete: ' + data.message);
+          })
+          .catch(() => alert('Delete failed. Make sure XAMPP / PHP is running.'));
       }
 
-      function saveProjectImages() {
-        projectImages[currentProjectId] = [...tempImages];
-        renderProjectStrip(currentProjectId);
-        closeUploadModal();
+      function refreshProjectStrip(projectId) {
+        fetch('get_images.php')
+          .then(r => r.json())
+          .then(data => {
+            if (!data.success) return;
+            const strip = document.getElementById('strip-' + projectId);
+            strip.innerHTML = '';
+            const imgs = data.projects[projectId] || [];
+            imgs.forEach(fp => {
+              const img = document.createElement('img');
+              img.src = fp; img.className = 'project-thumb'; img.alt = 'Screenshot';
+              img.onclick = () => openViewer(fp);
+              strip.appendChild(img);
+            });
+            strip.classList.toggle('has-images', imgs.length > 0);
+          });
       }
 
-      function renderProjectStrip(projectId) {
-        const strip = document.getElementById('strip-' + projectId);
-        strip.innerHTML = '';
-        projectImages[projectId].forEach((src, idx) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.className = 'project-thumb';
-          img.alt = 'Project screenshot ' + (idx+1);
-          img.onclick = () => openViewer(src);
-          strip.appendChild(img);
-        });
+      function loadAllStrips() {
+        fetch('get_images.php')
+          .then(r => r.json())
+          .then(data => {
+            if (!data.success) return;
+            [0,1,2].forEach(id => {
+              const strip = document.getElementById('strip-' + id);
+              strip.innerHTML = '';
+              const imgs = data.projects[id] || [];
+              imgs.forEach(fp => {
+                const img = document.createElement('img');
+                img.src = fp; img.className = 'project-thumb'; img.alt = 'Screenshot';
+                img.onclick = () => openViewer(fp);
+                strip.appendChild(img);
+              });
+              strip.classList.toggle('has-images', imgs.length > 0);
+            });
+          }).catch(() => {});
       }
 
       // ── FULLSCREEN VIEWER ──
-      function openViewer(src) {
-        document.getElementById('viewerImg').src = src;
-        document.getElementById('imgViewer').classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
+      function openViewer(src) { document.getElementById('viewerImg').src = src; document.getElementById('imgViewer').classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function closeViewer() { document.getElementById('imgViewer').classList.remove('open'); document.body.style.overflow = ''; }
 
-      function closeViewer() {
-        document.getElementById('imgViewer').classList.remove('open');
-        document.body.style.overflow = '';
-      }
+      document.getElementById('certModal').addEventListener('click', e => { if (e.target === document.getElementById('certModal')) closeCertModal(); });
+      document.getElementById('uploadModal').addEventListener('click', e => { if (e.target === document.getElementById('uploadModal')) closeUploadModal(); });
+      document.getElementById('imgViewer').addEventListener('click', e => { if (e.target !== document.getElementById('viewerImg')) closeViewer(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCertModal(); closeUploadModal(); closeViewer(); } });
 
-      // Close modals on overlay click
-      document.getElementById('certModal').addEventListener('click', function(e) {
-        if (e.target === this) closeCertModal();
-      });
-      document.getElementById('uploadModal').addEventListener('click', function(e) {
-        if (e.target === this) closeUploadModal();
-      });
-      document.getElementById('imgViewer').addEventListener('click', function(e) {
-        if (e.target === this || e.target === document.getElementById('viewerImg')) closeViewer();
-      });
-
-      // ESC key closes modals
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          closeCertModal(); closeUploadModal(); closeViewer();
-        }
-      });
-
-      // ── TYPING ANIMATION ──
-      const words = ["PROGRAMMER", "WEB DEVELOPER", "FULL STACK DEVELOPER"];
-      let wordIndex = 0, charIndex = 0, isDeleting = false;
-
+      // ── TYPING ──
+      const words = ["PROGRAMMER","WEB DEVELOPER","FULL STACK DEVELOPER"];
+      let wIdx=0,cIdx=0,deleting=false;
       function typeWriter() {
-        const el = document.getElementById('typed-text');
-        if (!el) return;
-        const word = words[wordIndex];
-        el.textContent = isDeleting ? word.substring(0, charIndex - 1) : word.substring(0, charIndex + 1);
-        isDeleting ? charIndex-- : charIndex++;
-        let speed = isDeleting ? 75 : 150;
-        if (!isDeleting && charIndex === word.length) { speed = 2000; isDeleting = true; }
-        else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; speed = 500; }
+        const el=document.getElementById('typed-text'), word=words[wIdx];
+        el.textContent = deleting ? word.substring(0,cIdx-1) : word.substring(0,cIdx+1);
+        deleting ? cIdx-- : cIdx++;
+        let speed = deleting ? 75 : 150;
+        if (!deleting && cIdx===word.length) { speed=2000; deleting=true; }
+        else if (deleting && cIdx===0) { deleting=false; wIdx=(wIdx+1)%words.length; speed=500; }
         setTimeout(typeWriter, speed);
       }
       typeWriter();
 
-      // ── NAVBAR SCROLL ──
-      window.addEventListener('scroll', () => {
-        const nb = document.querySelector('.navbar');
-        if (nb) nb.style.boxShadow = window.scrollY > 50 ? '0 2px 30px rgba(0,0,0,0.5)' : 'none';
-      });
-
-      // ── MOBILE NAV ──
-      const hamburger = document.getElementById('hamburger');
-      const navMenu = document.getElementById('navMenu');
-
-      hamburger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        navMenu.classList.toggle('active');
-        hamburger.querySelector('i').className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-          navMenu.classList.remove('active');
-          hamburger.querySelector('i').className = 'fas fa-bars';
-        }
-      });
-
+      // ── NAVBAR ──
+      window.addEventListener('scroll', () => { document.querySelector('.navbar').style.boxShadow = window.scrollY>50?'0 2px 30px rgba(0,0,0,0.5)':'none'; });
+      const hamburger=document.getElementById('hamburger'), navMenu=document.getElementById('navMenu');
+      hamburger.addEventListener('click', e => { e.stopPropagation(); navMenu.classList.toggle('active'); hamburger.querySelector('i').className=navMenu.classList.contains('active')?'fas fa-times':'fas fa-bars'; });
+      document.addEventListener('click', e => { if(!hamburger.contains(e.target)&&!navMenu.contains(e.target)) { navMenu.classList.remove('active'); hamburger.querySelector('i').className='fas fa-bars'; } });
       document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-          const href = link.getAttribute('href');
-          if (href.startsWith('#')) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-          }
-          if (window.innerWidth <= 768) {
-            navMenu.classList.remove('active');
-            hamburger.querySelector('i').className = 'fas fa-bars';
-          }
+        link.addEventListener('click', e => {
+          const href=link.getAttribute('href');
+          if (href.startsWith('#')) { e.preventDefault(); const el=document.querySelector(href); if(el) window.scrollTo({top:el.offsetTop-80,behavior:'smooth'}); }
+          if (window.innerWidth<=768) { navMenu.classList.remove('active'); hamburger.querySelector('i').className='fas fa-bars'; }
         });
       });
 
       // ── SKILL BARS ──
-      const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.progress-fill').forEach(bar => {
-              bar.style.width = bar.dataset.width + '%';
-            });
-          }
-        });
-      }, { threshold: 0.3 });
+      new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) e.target.querySelectorAll('.progress-fill').forEach(b=>b.style.width=b.dataset.width+'%'); }); },{threshold:0.3}).observe(document.querySelector('.skills-grid'));
 
-      document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
+      // ── SCROLL ANIM ──
+      const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.08});
+      document.querySelectorAll('.section').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(25px)';el.style.transition='opacity 0.6s ease,transform 0.6s ease';obs.observe(el);});
 
-      // ── SCROLL ANIMATIONS ──
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, { threshold: 0.08 });
-
-      document.querySelectorAll('.section').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(25px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-      });
-
-      // ── EMAIL FORM ──
-      function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-
-      function showSuccess() {
-        document.getElementById('errorMessage').style.display = 'none';
-        const s = document.getElementById('successMessage');
-        s.style.display = 'block';
-        setTimeout(() => s.style.display = 'none', 5000);
-      }
-
-      function showError(msg = 'Please fill in all required fields.') {
-        document.getElementById('successMessage').style.display = 'none';
-        const e = document.getElementById('errorMessage');
-        e.textContent = '❌ ' + msg;
-        e.style.display = 'block';
-        setTimeout(() => e.style.display = 'none', 5000);
-      }
-
-      document.getElementById('contactForm').addEventListener('submit', function(e) {
+      // ── EMAIL ──
+      function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+      function showFormSuccess(){const s=document.getElementById('successMessage');document.getElementById('errorMessage').style.display='none';s.style.display='block';setTimeout(()=>s.style.display='none',5000);}
+      function showFormError(msg){const e=document.getElementById('errorMessage');document.getElementById('successMessage').style.display='none';e.textContent='❌ '+msg;e.style.display='block';setTimeout(()=>e.style.display='none',5000);}
+      document.getElementById('contactForm').addEventListener('submit',function(e){
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        if (!name || !email || !subject || !message) return showError('Please fill in all required fields.');
-        if (!isValidEmail(email)) return showError('Please enter a valid email address.');
-
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-        emailjs.send('service_b0gqcsa', 'template_a2tgv8x', { name, title: subject, email, message })
-          .then(() => { showSuccess(); this.reset(); })
-          .catch(err => showError(err.text || 'Failed to send message. Please try again.'))
-          .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message'; });
+        const btn=document.getElementById('submitBtn'),name=document.getElementById('name').value.trim(),email=document.getElementById('email').value.trim(),subject=document.getElementById('subject').value.trim(),message=document.getElementById('message').value.trim();
+        if(!name||!email||!subject||!message) return showFormError('Please fill in all required fields.');
+        if(!isValidEmail(email)) return showFormError('Please enter a valid email address.');
+        btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';
+        emailjs.send('service_b0gqcsa','template_a2tgv8x',{name,title:subject,email,message})
+          .then(()=>{showFormSuccess();this.reset();})
+          .catch(err=>showFormError(err.text||'Failed to send. Please try again.'))
+          .finally(()=>{btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Send Message';});
       });
 
-      // ── BODY FADE IN ──
-      document.body.style.opacity = '0';
-      document.body.style.transition = 'opacity 0.5s ease';
-      window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+      // ── INIT ──
+      document.body.style.opacity='0';document.body.style.transition='opacity 0.5s ease';
+      window.addEventListener('load',()=>{document.body.style.opacity='1';loadAllStrips();});
     </script>
 </body>
 </html>
